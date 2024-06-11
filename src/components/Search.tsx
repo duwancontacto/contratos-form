@@ -48,6 +48,7 @@ export function Search({ setValue }: { setValue: any }) {
       };
       setValue("name", user.name);
       setValue("email", user.email);
+      toast.success("Medico encontrado!");
       reset();
     }
 
