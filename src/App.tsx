@@ -8,6 +8,7 @@ import {
 } from "../src/components/ui/card";
 import { Label } from "../src/components/ui/label";
 import { Input } from "../src/components/ui/input";
+import { Toaster } from "react-hot-toast";
 import {
   SelectValue,
   SelectTrigger,
@@ -23,19 +24,8 @@ import { Error } from "./components/Error";
 import { FormData, schema } from "./utils/FormHelper";
 import { useState } from "react";
 import { Loading } from "./components/Loading";
-//eslint-disable-next-line
-const ErrorLabel = ({ errors, name }: { errors: any; name: string }) => {
-  if (!errors[name]) return null;
-
-  const error = errors[name];
-  return (
-    <>
-      {errors[name] && (
-        <span className="text-red-500 text-sm ps-1">{error?.message}</span>
-      )}
-    </>
-  );
-};
+import ErrorLabel from "./components/ErrorLabel";
+import { Search } from "./components/Search";
 
 export default function App() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -74,6 +64,7 @@ export default function App() {
           <span className="text-lg font-bold">Farmacias especializadas</span>
         </a>
       </header>
+      <Toaster />
 
       {showSuccess && <Success handleReset={handleReset} />}
       {showFalse && <Error handleReset={handleReset} />}
@@ -92,6 +83,7 @@ export default function App() {
                   Completa este formulario para registrar tu contrato.
                 </p>
               </div>
+              <Search setValue={setValue} />
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex justify-center">
@@ -129,7 +121,7 @@ export default function App() {
 
                       <div className="grid gap-2">
                         <Label htmlFor="email">
-                          Email
+                          Correo electrónico
                           <ErrorLabel name="email" errors={errors} />
                         </Label>
                         <Input

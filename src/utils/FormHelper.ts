@@ -26,8 +26,8 @@ export const schema = yup.object().shape({
   curp: yup.string().required("CURP es requerido"),
   email: yup
     .string()
-    .email("Email no es válido")
-    .required("Email es requerido"),
+    .email("Correo electrónico no es válido")
+    .required("Correo electrónico es requerido"),
   phone: yup
     .number()
     .typeError("Debe ser un número")
@@ -48,4 +48,11 @@ export const schema = yup.object().shape({
   card_physical_or_digital: yup
     .string()
     .required("Tarjeta física o digital es requerido"),
+});
+
+export const schemaSearch = yup.object().shape({
+  email: yup
+    .string()
+    .email("Correo electrónico no es válido")
+    .required("Correo electrónico es requerido"),
 });
