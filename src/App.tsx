@@ -21,11 +21,12 @@ import { Button } from "../src/components/ui/button";
 import { Success } from "./components/Success";
 import { Error } from "./components/Error";
 
-import { FormData, schema } from "./utils/FormHelper";
+import { schema } from "./utils/FormHelper";
 import { useState } from "react";
 import { Loading } from "./components/Loading";
 import ErrorLabel from "./components/ErrorLabel";
 import { Search } from "./components/Search";
+import { Checkbox } from "./components/ui/checkbox";
 
 export default function App() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -36,12 +37,16 @@ export default function App() {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
+  console.log("first", errors);
+
+  //eslint-disable-next-line
+  const onSubmit = (data: any) => {
     setShowLoading(true);
     setTimeout(() => {
       console.log(data);
@@ -50,6 +55,9 @@ export default function App() {
       setShowLoading(false);
     }, 4000);
   };
+
+  const watchDelivery = watch("delivery");
+  console.log("first", watchDelivery);
 
   const handleReset = () => {
     setShowSuccess(false);
@@ -77,7 +85,7 @@ export default function App() {
             <div className="grid gap-6 md:gap-8 lg:gap-12">
               <div className="text-center">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Registro de Usuarios
+                  Registro de Pacientes
                 </h1>
                 <p className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400 pt-3">
                   Completa este formulario para registrar tu contrato.
@@ -145,32 +153,13 @@ export default function App() {
                           className={errors.phone ? "border-red-500" : ""}
                         />
                       </div>
-
-                      <div className="grid gap-2">
-                        <Label htmlFor="address">
-                          Domicilio
-                          <ErrorLabel name="address" errors={errors} />
-                        </Label>
-                        <Input
-                          id="address"
-                          placeholder="Ejemplo: Calle 123, Colonia Centro, Ciudad de México"
-                          type="text"
-                          {...register("address")}
-                          className={errors.address ? "border-red-500" : ""}
-                        />
-                      </div>
                     </CardContent>
-                    {/*                   <CardFooter>
-                    <Button className="w-full" type="submit">
-                      Enviar Registro
-                    </Button>
-                  </CardFooter> */}
                   </Card>
                 </div>
                 <div className="flex justify-center mt-5">
                   <Card className="w-full max-w-md sm:max-w-4xl">
                     <CardHeader>
-                      <CardTitle>Domicilio de entrega</CardTitle>
+                      <CardTitle>Domicilio </CardTitle>
                     </CardHeader>
                     <CardContent className="grid lg:grid-cols-2  gap-4">
                       <div className="grid gap-2">
@@ -276,19 +265,193 @@ export default function App() {
                           }
                         />
                       </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="person">
-                          Persona adicional autorizada para recibir medicamento
-                          <ErrorLabel name="person" errors={errors} />
-                        </Label>
-                        <Input
-                          type="text"
-                          id="person"
-                          placeholder="Ejemplo: Juan Pérez"
-                          {...register("person")}
-                          className={errors.person ? "border-red-500" : ""}
+
+                      <div className="flex ">
+                        <Checkbox
+                          id="delivery"
+                          {...register("delivery")}
+                          onCheckedChange={(e: boolean) => {
+                            setValue("delivery", e, {
+                              shouldValidate: true,
+                            });
+                          }}
                         />
+                        <Label htmlFor="delivery" className="ps-2">
+                          ¿Desea que la entrega sea en otro domicilio?
+                        </Label>
                       </div>
+
+                      {watchDelivery === true && (
+                        <>
+                          <div></div>
+                          <CardTitle className="w-full my-5">
+                            Domicilio de entrega
+                          </CardTitle>
+                          <div></div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="street">
+                              Calle{" "}
+                              <ErrorLabel
+                                name="street_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="street_delivery"
+                              placeholder="Ejemplo: Calle 123"
+                              {...register("street_delivery")}
+                              className={
+                                errors.street_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="ext_num_delivery">
+                              Número Ext{" "}
+                              <ErrorLabel
+                                name="ext_num_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="ext_num_delivery"
+                              placeholder="Ejemplo: 123"
+                              {...register("ext_num_delivery")}
+                              className={
+                                errors.ext_num_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="int_num_delivery">
+                              Número Int{" "}
+                              <ErrorLabel
+                                name="int_num_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="int_num_delivery"
+                              placeholder="Ejemplo: 123"
+                              {...register("int_num_delivery")}
+                              className={
+                                errors.int_num_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="colony_delivery">
+                              Colonia{" "}
+                              <ErrorLabel
+                                name="colony_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="colony_delivery"
+                              placeholder="Ejemplo: Colonia Centro"
+                              {...register("colony_delivery")}
+                              className={
+                                errors.colony_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="cp_delivery">
+                              C.P{" "}
+                              <ErrorLabel name="cp_delivery" errors={errors} />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="cp_delivery"
+                              placeholder="Ejemplo: 12345"
+                              {...register("cp_delivery")}
+                              className={
+                                errors.cp_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="municipe_delivery">
+                              Alcaldía / Municipio{" "}
+                              <ErrorLabel
+                                name="municipe_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="municipe_delivery"
+                              placeholder="Ejemplo: Cuauhtémoc"
+                              {...register("municipe_delivery")}
+                              className={
+                                errors.municipe_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="city_delivery">
+                              Estado / Ciudad{" "}
+                              <ErrorLabel
+                                name="city_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="city_delivery"
+                              placeholder="Ejemplo: Ciudad de México"
+                              {...register("city_delivery")}
+                              className={
+                                errors.city_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="street_distance_delivery">
+                              Entre qué calles{" "}
+                              <ErrorLabel
+                                name="street_distance_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="street_distance_delivery"
+                              placeholder="Ejemplo: Calle 123 y Calle 124"
+                              {...register("street_distance_delivery")}
+                              className={
+                                errors.street_distance_delivery
+                                  ? "border-red-500"
+                                  : ""
+                              }
+                            />
+                          </div>
+                          <div className="grid gap-2">
+                            <Label htmlFor="person_delivery">
+                              Persona adicional autorizada para recibir
+                              medicamento
+                              <ErrorLabel
+                                name="person_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Input
+                              type="text"
+                              id="person_delivery"
+                              placeholder="Ejemplo: Juan Pérez"
+                              {...register("person_delivery")}
+                              className={
+                                errors.person_delivery ? "border-red-500" : ""
+                              }
+                            />
+                          </div>{" "}
+                        </>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -338,8 +501,8 @@ export default function App() {
                               />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="Crédito">Credito</SelectItem>
-                              <SelectItem value="Debito">Debito</SelectItem>
+                              <SelectItem value="Crédito">Crédito</SelectItem>
+                              <SelectItem value="Débito">Débito</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -377,6 +540,18 @@ export default function App() {
                           </Select>
                         </div>
                         <div className="grid gap-2">
+                          <Label htmlFor="full_name">
+                            Nombre completo del Titular
+                            <ErrorLabel name="full_name" errors={errors} />
+                          </Label>
+                          <Input
+                            id="full_name"
+                            placeholder="Ejemplo: Juan Manuel Pérez García"
+                            {...register("full_name")}
+                            className={errors.full_name ? "border-red-500" : ""}
+                          />
+                        </div>
+                        <div className="grid gap-2">
                           <Label htmlFor="digits">
                             Últimos 5 dígitos de la tarjeta
                             <ErrorLabel name="digits" errors={errors} />
@@ -384,9 +559,26 @@ export default function App() {
                           <Input
                             maxLength={5}
                             id="digits"
+                            type="number"
                             placeholder="Ejemplo: 12345"
                             {...register("digits")}
                             className={errors.digits ? "border-red-500" : ""}
+                          />
+                        </div>
+                        <div className="grid gap-2">
+                          <Label htmlFor="max_amount">
+                            Monto máximo fijo dle cargo autorizado
+                            <ErrorLabel name="max_amount" errors={errors} />
+                          </Label>
+                          <Input
+                            maxLength={5}
+                            id="max_amount"
+                            type="number"
+                            placeholder="Ejemplo: 10000"
+                            {...register("max_amount")}
+                            className={
+                              errors.max_amount ? "border-red-500" : ""
+                            }
                           />
                         </div>
                       </div>

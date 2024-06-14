@@ -32,7 +32,7 @@ export const schema = yup.object().shape({
     .number()
     .typeError("Debe ser un número")
     .required("Télefono es requerido"),
-  address: yup.string().required("Domicilio es requerido"),
+
   street: yup.string().required("Calle es requerido"),
   ext_num: yup.string().required("Número Ext es requerido"),
   int_num: yup.string().required("Número Int es requerido"),
@@ -41,10 +41,26 @@ export const schema = yup.object().shape({
   municipe: yup.string().required("Alcaldia / Municipio es requerido"),
   city: yup.string().required("Estado / Ciudad es requerido"),
   street_distance: yup.string().required("Entre que calles es requerido"),
-  person: yup.string().required("Persona adicional es requerido"),
+
+  person_delivery: yup.string().optional(),
+  delivery: yup.boolean().optional(),
+
+  street_delivery: yup.string().optional(),
+  ext_num_delivery: yup.string().optional(),
+  int_num_delivery: yup.string().optional(),
+  colony_delivery: yup.string().optional(),
+  cp_delivery: yup.string().optional(),
+  municipe_delivery: yup.string().optional(),
+  city_delivery: yup.string().optional(),
+  street_distance_delivery: yup.string().optional(),
   institution: yup.string().required("Institución Financiera es requerido"),
   card_type: yup.string().required("Tipo de tarjeta es requerido"),
-  digits: yup.string().required("Últimos 5 dígitos de la tarjeta es requerido"),
+  full_name: yup.string().required("Nombre completo es requerido"),
+  max_amount: yup.string().required("Monto máximo es requerido"),
+  digits: yup
+    .string()
+    .required("Últimos 5 dígitos de la tarjeta es requerido")
+    .length(5, "Debe ser de 5 dígitos"),
   card_physical_or_digital: yup
     .string()
     .required("Tarjeta física o digital es requerido"),

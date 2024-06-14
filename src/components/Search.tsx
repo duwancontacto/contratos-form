@@ -28,31 +28,62 @@ export function Search({ setValue }: { setValue: any }) {
   });
 
   const onSubmit = async ({ email }: { email: string }) => {
-    setShowLoading(true);
-    const result = await autoPopulateProfile(email);
+    try {
+      setShowLoading(true);
+      const result = await autoPopulateProfile(email);
 
-    if (!result.data.results) {
-      toast.error("Medico no encontrado!");
-    } else {
-      const contact = result.data.contacts[0] || null;
+      if (!result.data.results) {
+        toast.error("Paciente no encontrado!");
+      } else {
+        const contact = result.data.contacts[0] || null;
 
-      const {
-        nombre = "",
-        apellidoPaterno = "",
-        apellidoMaterno = "",
-      } = contact.datosGenerales || {};
+        const {
+          nombre = "",
+          apellidoPaterno = "",
+          apellidoMaterno = "",
+        } = contact.datosGenerales || {};
 
-      const user = {
-        name: `${nombre} ${apellidoPaterno} ${apellidoMaterno}`,
-        email: contact.listaCorreoElectronico[0].correroElectronico,
-      };
-      setValue("name", user.name);
-      setValue("email", user.email);
-      toast.success("Medico encontrado!");
-      reset();
+        const user = {
+          name: `${nombre} ${apellidoPaterno} ${apellidoMaterno}`,
+          email:
+            (contact?.listaCorreoElectronico &&
+              contact?.listaCorreoElectronico[0]?.correroElectronico) ||
+            "",
+          phone:
+            (contact?.listaTelefonos &&
+              contact?.listaTelefonos[0]?.telefono?.NumeroTelefonico) ||
+            "",
+          direccion:
+            (contact?.listaDireccion &&
+              contact?.listaDireccion[0]?.direccion) ||
+            {},
+        };
+        setValue("name", user.name);
+        setValue("email", user.email);
+        setValue("phone", user.phone);
+
+        setValue("street", user.direccion.calle);
+        setValue("ext_num", user.direccion.numeroExterior);
+        setValue("int_num", user.direccion.numeroInterior);
+        setValue("colony", user.direccion.colonia);
+        setValue("cp", user.direccion.codigoPostal);
+        setValue("municipe", user.direccion.delgacionMunicipio);
+        setValue(
+          "city",
+          user.direccion.estado && user.direccion.ciudad
+            ? `${user.direccion.estado} / ${user.direccion.ciudad}`
+            : ""
+        );
+        setValue("street_distance", user.direccion.referncias);
+        toast.success("Paciente encontrado!");
+        reset();
+      }
+
+      setShowLoading(false);
+    } catch (error) {
+      toast.error("Paciente no encontrado!");
+      setShowLoading(false);
     }
-
-    setShowLoading(false);
   };
 
   return (
@@ -60,7 +91,7 @@ export function Search({ setValue }: { setValue: any }) {
       <div className="flex justify-center">
         <Card className="w-full max-w-md sm:max-w-4xl">
           <CardHeader>
-            <CardTitle>Buscar usuario</CardTitle>
+            <CardTitle>Buscar paciente</CardTitle>
           </CardHeader>
           <CardContent className="grid  gap-4">
             <div className="grid gap-2">
