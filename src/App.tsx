@@ -27,6 +27,50 @@ import { Loading } from "./components/Loading";
 import ErrorLabel from "./components/ErrorLabel";
 import { Search } from "./components/Search";
 import { Checkbox } from "./components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
+
+const products = [
+  {
+    id: "1",
+    name: "Producto 1",
+    description: "Descripción del producto 1",
+    price: "100",
+    price_6: "90",
+    price_12: "80",
+  },
+  {
+    id: "2",
+    name: "Producto 2",
+    description: "Descripción del producto 2",
+    price: "200",
+    price_6: "180",
+    price_12: "160",
+  },
+  {
+    id: "3",
+    name: "Producto 3",
+    description: "Descripción del producto 3",
+    price: "300",
+    price_6: "270",
+    price_12: "240",
+  },
+  {
+    id: "4",
+    name: "Producto 4",
+    description: "Descripción del producto 4",
+    price: "400",
+    price_6: "360",
+    price_12: "320",
+  },
+  {
+    id: "5",
+    name: "Producto 5",
+    description: "Descripción del producto 5",
+    price: "500",
+    price_6: "450",
+    price_12: "400",
+  },
+];
 
 export default function App() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -43,8 +87,6 @@ export default function App() {
     resolver: yupResolver(schema),
   });
 
-  console.log("first", errors);
-
   //eslint-disable-next-line
   const onSubmit = (data: any) => {
     setShowLoading(true);
@@ -57,13 +99,18 @@ export default function App() {
   };
 
   const watchDelivery = watch("delivery");
-  console.log("first", watchDelivery);
+  const watchProduct = watch("product");
+  const watchProductDuration = watch("product_duration");
 
   const handleReset = () => {
     setShowSuccess(false);
     setShowFalse(false);
     reset();
   };
+
+  const selectedProduct = products.find(
+    (product) => product.id === watchProduct
+  );
 
   return (
     <div>
@@ -455,6 +502,138 @@ export default function App() {
                     </CardContent>
                   </Card>
                 </div>
+
+                <div className="flex justify-center mt-5">
+                  <Card className="w-full max-w-md sm:max-w-4xl">
+                    <CardHeader>
+                      <CardTitle>Producto</CardTitle>
+                    </CardHeader>
+                    <CardContent className="grid gap-4">
+                      <div className="grid gap-2">
+                        <Label htmlFor="product">
+                          Selecciona un Producto{" "}
+                          <ErrorLabel name="product" errors={errors} />
+                        </Label>
+                        <Select
+                          onValueChange={(value) =>
+                            setValue("product", value, {
+                              shouldValidate: true,
+                            })
+                          }
+                        >
+                          <SelectTrigger
+                            className={errors.product ? "border-red-500" : ""}
+                          >
+                            <SelectValue placeholder="Selecciona un producto" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {products.map((product) => (
+                              <SelectItem value={product.id}>
+                                {product.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {watchProduct && (
+                        <>
+                          {" "}
+                          <div className="grid gap-2">
+                            <Label>
+                              Selecciona la Duración{" "}
+                              <ErrorLabel
+                                name="product_duration"
+                                errors={errors}
+                              />
+                            </Label>
+                            <div className="flex items-center gap-4">
+                              <Label
+                                htmlFor="product_duration-6"
+                                className="flex items-center gap-2 cursor-pointer "
+                              >
+                                <RadioGroup
+                                  className="flex items-center"
+                                  onValueChange={(value) =>
+                                    setValue("product_duration", value, {
+                                      shouldValidate: true,
+                                    })
+                                  }
+                                >
+                                  <div className="flex items-center">
+                                    <RadioGroupItem
+                                      id="product_duration-6"
+                                      value="6"
+                                      className={
+                                        errors.product_duration
+                                          ? "border-red-500"
+                                          : ""
+                                      }
+                                    />
+                                    <label
+                                      htmlFor="product_duration-6"
+                                      className={
+                                        errors.product_duration
+                                          ? "text-red-500 ps-2"
+                                          : "ps-2"
+                                      }
+                                    >
+                                      6 meses - $ {selectedProduct?.price_6}
+                                    </label>
+                                  </div>
+                                  <div className="flex items-center">
+                                    <RadioGroupItem
+                                      id="product_duration-12"
+                                      value="12"
+                                      className={
+                                        errors.product_duration
+                                          ? "border-red-500"
+                                          : ""
+                                      }
+                                    />
+                                    <label
+                                      htmlFor="product_duration-12"
+                                      className={
+                                        errors.product_duration
+                                          ? "text-red-500 ps-2"
+                                          : "ps-2"
+                                      }
+                                    >
+                                      12 meses - $ {selectedProduct?.price_12}
+                                    </label>
+                                  </div>
+                                </RadioGroup>
+                              </Label>
+                            </div>
+                          </div>
+                          {selectedProduct && watchProductDuration && (
+                            <div className=" ">
+                              <div className="text-2xl font-bold">
+                                {selectedProduct.name}
+                              </div>
+                              <div className="text-gray-500">
+                                {selectedProduct.description}
+                              </div>
+                              <Label>Precio</Label>
+                              <div className="flex flex-col items-start justify-start">
+                                <div className="text-sm font-bold line-through text-gray-500">
+                                  {"$"}
+                                  {selectedProduct.price}
+                                </div>
+                                <div className="text-3xl font-bold">
+                                  {"$"}
+                                  {watchProductDuration === "6"
+                                    ? selectedProduct.price_6
+                                    : selectedProduct.price_12}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
                 <div className="flex justify-center mt-5">
                   <Card className="w-full max-w-md sm:max-w-4xl">
                     <CardHeader>
@@ -490,9 +669,7 @@ export default function App() {
                           >
                             <SelectTrigger
                               className={
-                                errors.card_physical_or_digital
-                                  ? "border-red-500"
-                                  : ""
+                                errors.card_type ? "border-red-500" : ""
                               }
                             >
                               <SelectValue
