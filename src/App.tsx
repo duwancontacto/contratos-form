@@ -22,14 +22,15 @@ import { Success } from "./components/Success";
 import { Error } from "./components/Error";
 
 import { schema } from "./utils/FormHelper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loading } from "./components/Loading";
 import ErrorLabel from "./components/ErrorLabel";
 import { Search } from "./components/Search";
 import { Checkbox } from "./components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
+import { getProducts, sendContract } from "./services/search";
 
-const products = [
+const products2 = [
   {
     id: "1",
     name: "Producto 1",
@@ -76,6 +77,7 @@ export default function App() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFalse, setShowFalse] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const [products, setProducts] = useState(products2);
   const {
     register,
     handleSubmit,
@@ -87,15 +89,28 @@ export default function App() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    getProducts().then((response) => {
+      setProducts(response.data);
+    });
+  }, []);
+
   //eslint-disable-next-line
-  const onSubmit = (data: any) => {
-    setShowLoading(true);
-    setTimeout(() => {
+  const onSubmit = async (data: any) => {
+    try {
+      setShowLoading(true);
+
+      const result = await sendContract(data);
+      console.log("result", result);
+
       console.log(data);
       setShowSuccess(true);
+      setShowLoading(false);
+    } catch (error) {
+      console.log("first", error);
       setShowFalse(true);
       setShowLoading(false);
-    }, 4000);
+    }
   };
 
   const watchDelivery = watch("delivery");
