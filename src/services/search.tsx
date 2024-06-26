@@ -8,12 +8,12 @@ export const autoPopulateProfile = (search: string) => {
 };
 
 export const getProducts = () => {
-  return axios.get(backendUrl + "/products/");
+  return axios.get(backendUrl + "/products");
 };
 
 //eslint-disable-next-line
 export const sendContract = (contractPayload: any) => {
   const requestBody = { ...contractPayload };
 
-  return axios.post(backendUrl + "/documents/", requestBody);
+  return axios.post(backendUrl + "/documents", requestBody);
 };

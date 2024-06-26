@@ -41,10 +41,13 @@ export function Search({ setValue }: { setValue: any }) {
           nombre = "",
           apellidoPaterno = "",
           apellidoMaterno = "",
+          idExterno,
         } = contact.datosGenerales || {};
 
         const user = {
-          name: `${nombre} ${apellidoPaterno} ${apellidoMaterno}`,
+          first_name: nombre,
+          last_name1: apellidoPaterno,
+          last_name2: apellidoMaterno,
           email:
             (contact?.listaCorreoElectronico &&
               contact?.listaCorreoElectronico[0]?.correroElectronico) ||
@@ -58,10 +61,12 @@ export function Search({ setValue }: { setValue: any }) {
               contact?.listaDireccion[0]?.direccion) ||
             {},
         };
-        setValue("name", user.name);
+        setValue("first_name", user.first_name);
+        setValue("last_name1", user.last_name1);
+        setValue("last_name2", user.last_name2);
         setValue("email", user.email);
         setValue("phone", user.phone);
-
+        setValue("idCX", idExterno);
         setValue("street", user.direccion.calle);
         setValue("ext_num", user.direccion.numeroExterior);
         setValue("int_num", user.direccion.numeroInterior);

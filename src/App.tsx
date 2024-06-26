@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { Loading } from "./components/Loading";
 import ErrorLabel from "./components/ErrorLabel";
 import { Search } from "./components/Search";
+import MexicoState from "./lib/mexicoStates.json";
 import { Checkbox } from "./components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
 import { getProducts, sendContract } from "./services/search";
@@ -87,11 +88,14 @@ export default function App() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      delivery: false,
+    },
   });
 
   useEffect(() => {
     getProducts().then((response) => {
-      setProducts(response.data);
+      response.data.length && setProducts(response.data);
     });
   }, []);
 
@@ -163,16 +167,42 @@ export default function App() {
                     </CardHeader>
                     <CardContent className="grid lg:grid-cols-2 gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="name">
+                        <Label htmlFor="first_name">
                           Nombre
-                          <ErrorLabel name="name" errors={errors} />
+                          <ErrorLabel name="first_name" errors={errors} />
                         </Label>
                         <Input
                           type="text"
-                          id="name"
-                          placeholder="Ejemplo: Juan Pérez"
-                          {...register("name")}
-                          className={errors.name ? "border-red-500" : ""}
+                          id="first_name"
+                          placeholder="Ejemplo: Juan Miguel"
+                          {...register("first_name")}
+                          className={errors.first_name ? "border-red-500" : ""}
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="last_name1">
+                          Apellido Paterno
+                          <ErrorLabel name="last_name1" errors={errors} />
+                        </Label>
+                        <Input
+                          type="text"
+                          id="last_name1"
+                          placeholder="Ejemplo: Pérez"
+                          {...register("last_name1")}
+                          className={errors.last_name1 ? "border-red-500" : ""}
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="last_name2">
+                          Apellido Materno
+                          <ErrorLabel name="last_name2" errors={errors} />
+                        </Label>
+                        <Input
+                          type="text"
+                          id="last_name2"
+                          placeholder="Ejemplo: Fernandez"
+                          {...register("last_name2")}
+                          className={errors.last_name2 ? "border-red-500" : ""}
                         />
                       </div>
                       <div className="grid gap-2">
@@ -214,6 +244,32 @@ export default function App() {
                           {...register("phone")}
                           className={errors.phone ? "border-red-500" : ""}
                         />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="gender">
+                          Genero
+                          <ErrorLabel name="gender" errors={errors} />
+                        </Label>
+                        <Select
+                          onValueChange={(value) =>
+                            setValue("gender", value, {
+                              shouldValidate: true,
+                            })
+                          }
+                        >
+                          <SelectTrigger
+                            className={errors.gender ? "border-red-500" : ""}
+                          >
+                            <SelectValue
+                              id="gender"
+                              placeholder="Selecciona el genero"
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="M">Masculino</SelectItem>
+                            <SelectItem value="F">Femenino</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </CardContent>
                   </Card>
@@ -279,7 +335,7 @@ export default function App() {
                           C.P <ErrorLabel name="cp" errors={errors} />
                         </Label>
                         <Input
-                          type="text"
+                          type="number"
                           id="cp"
                           placeholder="Ejemplo: 12345"
                           {...register("cp")}
@@ -300,8 +356,38 @@ export default function App() {
                         />
                       </div>
                       <div className="grid gap-2">
+                        <Label htmlFor="state">
+                          Estado
+                          <ErrorLabel name="state" errors={errors} />
+                        </Label>
+
+                        <Select
+                          onValueChange={(value) =>
+                            setValue("state", value, {
+                              shouldValidate: true,
+                            })
+                          }
+                        >
+                          <SelectTrigger
+                            className={errors.state ? "border-red-500" : ""}
+                          >
+                            <SelectValue
+                              id="state"
+                              placeholder="Selecciona el estado"
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {MexicoState.map((state) => (
+                              <SelectItem value={state.value}>
+                                {state.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="grid gap-2">
                         <Label htmlFor="city">
-                          Estado / Ciudad{" "}
+                          Ciudad
                           <ErrorLabel name="city" errors={errors} />
                         </Label>
                         <Input
@@ -327,6 +413,8 @@ export default function App() {
                           }
                         />
                       </div>
+
+                      <div></div>
 
                       <div className="flex ">
                         <Checkbox
@@ -456,8 +544,42 @@ export default function App() {
                             />
                           </div>
                           <div className="grid gap-2">
+                            <Label htmlFor="state_delivery">
+                              Estado
+                              <ErrorLabel
+                                name="state_delivery"
+                                errors={errors}
+                              />
+                            </Label>
+                            <Select
+                              onValueChange={(value) =>
+                                setValue("state_delivery", value, {
+                                  shouldValidate: true,
+                                })
+                              }
+                            >
+                              <SelectTrigger
+                                className={
+                                  errors.state_delivery ? "border-red-500" : ""
+                                }
+                              >
+                                <SelectValue
+                                  id="state_delivery"
+                                  placeholder="Selecciona el estado"
+                                />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {MexicoState.map((state) => (
+                                  <SelectItem value={state.value}>
+                                    {state.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="grid gap-2">
                             <Label htmlFor="city_delivery">
-                              Estado / Ciudad{" "}
+                              Ciudad{" "}
                               <ErrorLabel
                                 name="city_delivery"
                                 errors={errors}

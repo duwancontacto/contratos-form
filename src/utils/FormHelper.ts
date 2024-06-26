@@ -22,28 +22,38 @@ export type FormData = {
 };
 
 export const schema = yup.object().shape({
-  name: yup.string().required("Nombre es requerido"),
+  first_name: yup.string().required("Nombre es requerido"),
+  last_name1: yup.string().required("Apellido paterno es requerido"),
+  last_name2: yup.string().required("Apellido materno es requerido"),
   curp: yup.string().required("CURP es requerido"),
+  gender: yup.string().required("Genero es requerido"),
   email: yup
     .string()
     .email("Correo electrónico no es válido")
     .required("Correo electrónico es requerido"),
   phone: yup
-    .number()
+    .string()
     .typeError("Debe ser un número")
-    .required("Télefono es requerido"),
+    .required("Télefono es requerido")
+    .length(10, "Debe ser de 10 dígitos"),
 
   street: yup.string().required("Calle es requerido"),
   ext_num: yup.string().required("Número Ext es requerido"),
   int_num: yup.string().required("Número Int es requerido"),
   colony: yup.string().required("Colonia es requerido"),
-  cp: yup.string().required("C.P es requerido"),
+  cp: yup
+    .string()
+    .required("C.P es requerido")
+    .length(5, "Debe ser de 5 dígitos"),
   municipe: yup.string().required("Alcaldia / Municipio es requerido"),
-  city: yup.string().required("Estado / Ciudad es requerido"),
+  state: yup.string().required("Estado es requerido"),
+  city: yup.string().required("Ciudad es requerido"),
   street_distance: yup.string().required("Entre que calles es requerido"),
 
   person_delivery: yup.string().optional(),
   delivery: yup.boolean().optional(),
+
+  idCX: yup.string().optional(),
 
   street_delivery: yup.string().optional(),
   ext_num_delivery: yup.string().optional(),
@@ -52,6 +62,7 @@ export const schema = yup.object().shape({
   cp_delivery: yup.string().optional(),
   municipe_delivery: yup.string().optional(),
   city_delivery: yup.string().optional(),
+  state_delivery: yup.string().optional(),
   street_distance_delivery: yup.string().optional(),
   institution: yup.string().required("Institución Financiera es requerido"),
   card_type: yup.string().required("Tipo de tarjeta es requerido"),
