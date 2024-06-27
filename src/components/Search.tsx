@@ -42,6 +42,7 @@ export function Search({ setValue }: { setValue: any }) {
           apellidoPaterno = "",
           apellidoMaterno = "",
           idExterno,
+          sexo,
         } = contact.datosGenerales || {};
 
         const user = {
@@ -64,10 +65,13 @@ export function Search({ setValue }: { setValue: any }) {
         setValue("first_name", user.first_name);
         setValue("last_name1", user.last_name1);
         setValue("last_name2", user.last_name2);
+        setValue("gender", sexo === "Masculino" ? "M" : "F");
+
         setValue("email", user.email);
         setValue("phone", user.phone);
         setValue("idCX", idExterno);
         setValue("street", user.direccion.calle);
+        setValue("state", user.direccion.estado);
         setValue("ext_num", user.direccion.numeroExterior);
         setValue("int_num", user.direccion.numeroInterior);
         setValue("colony", user.direccion.colonia);
@@ -114,7 +118,11 @@ export function Search({ setValue }: { setValue: any }) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button disabled={showLoading} className="w-full" type="submit">
+            <Button
+              disabled={showLoading}
+              className="w-full bg-fanafesa"
+              type="submit"
+            >
               Buscar
             </Button>
           </CardFooter>

@@ -23,10 +23,14 @@ export type FormData = {
 
 export const schema = yup.object().shape({
   first_name: yup.string().required("Nombre es requerido"),
+  card_new: yup.string().required("Nueva tarjeta es requerido"),
   last_name1: yup.string().required("Apellido paterno es requerido"),
   last_name2: yup.string().required("Apellido materno es requerido"),
   curp: yup.string().required("CURP es requerido"),
+  specialty: yup.string().required("Especialidad Médica es requerida"),
   gender: yup.string().required("Genero es requerido"),
+  idCX: yup.string().optional(),
+
   email: yup
     .string()
     .email("Correo electrónico no es válido")
@@ -41,6 +45,8 @@ export const schema = yup.object().shape({
   ext_num: yup.string().required("Número Ext es requerido"),
   int_num: yup.string().required("Número Int es requerido"),
   colony: yup.string().required("Colonia es requerido"),
+  person: yup.string().required("Persona es requerido"),
+
   cp: yup
     .string()
     .required("C.P es requerido")
@@ -49,11 +55,10 @@ export const schema = yup.object().shape({
   state: yup.string().required("Estado es requerido"),
   city: yup.string().required("Ciudad es requerido"),
   street_distance: yup.string().required("Entre que calles es requerido"),
-
-  person_delivery: yup.string().optional(),
+  street_distance1: yup.string().required("Entre que calles es requerido"),
   delivery: yup.boolean().optional(),
 
-  idCX: yup.string().optional(),
+  person_delivery: yup.string().optional(),
 
   street_delivery: yup.string().optional(),
   ext_num_delivery: yup.string().optional(),
@@ -64,11 +69,12 @@ export const schema = yup.object().shape({
   city_delivery: yup.string().optional(),
   state_delivery: yup.string().optional(),
   street_distance_delivery: yup.string().optional(),
+  street_distance1_delivery: yup.string().optional(),
   institution: yup.string().required("Institución Financiera es requerido"),
   card_type: yup.string().required("Tipo de tarjeta es requerido"),
   full_name: yup.string().required("Nombre completo es requerido"),
   max_amount: yup.string().required("Monto máximo es requerido"),
-  product: yup.string().required("Producto es requerido"),
+  product_id: yup.string().required("Producto es requerido"),
   product_duration: yup.string().required("Duración del producto es requerido"),
   digits: yup
     .string()

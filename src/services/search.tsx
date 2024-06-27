@@ -17,3 +17,8 @@ export const sendContract = (contractPayload: any) => {
 
   return axios.post(backendUrl + "/documents", requestBody);
 };
+
+//eslint-disable-next-line
+export const getSign = (document_id: any) => {
+  return axios.post(backendUrl + `/documents/${document_id}/sign`);
+};
