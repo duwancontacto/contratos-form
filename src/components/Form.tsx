@@ -58,12 +58,23 @@ export function Form({ onSubmit, products }: Props) {
   //eslint-disable-next-line
   const handleSend = async (data: any) => {
     try {
-      await onSubmit(data);
+      const max_amount =
+        watchProductDuration === "0"
+          ? formatPrice(selectedProduct?.price_membership_6 || "")
+          : formatPrice(selectedProduct?.price_membership_12 || "");
+      await onSubmit({ ...data, max_amount });
       reset();
     } catch (error) {
       console.log("error", error);
     }
   };
+
+  function formatPrice(precio: string): string {
+    return new Intl.NumberFormat("es-MX", {
+      style: "currency",
+      currency: "MXN",
+    }).format(Number(precio));
+  }
 
   return (
     <>
@@ -647,7 +658,10 @@ export function Form({ onSubmit, products }: Props) {
                                   : "ps-2"
                               }
                             >
-                              6 meses - $ {selectedProduct?.price_membership_6}
+                              6 meses -{" "}
+                              {formatPrice(
+                                selectedProduct?.price_membership_6 || ""
+                              )}
                             </label>
                           </div>
                           <div className="flex items-center">
@@ -666,8 +680,10 @@ export function Form({ onSubmit, products }: Props) {
                                   : "ps-2"
                               }
                             >
-                              12 meses - ${" "}
-                              {selectedProduct?.price_membership_12}
+                              12 meses -{" "}
+                              {formatPrice(
+                                selectedProduct?.price_membership_12 || ""
+                              )}
                             </label>
                           </div>
                         </RadioGroup>
@@ -685,14 +701,12 @@ export function Form({ onSubmit, products }: Props) {
                       <Label>Precio</Label>
                       <div className="flex flex-col items-start justify-start">
                         <div className="text-sm font-bold line-through text-gray-500">
-                          {"$"}
-                          {selectedProduct.price_list}
+                          {formatPrice(selectedProduct.price_list)}
                         </div>
                         <div className="text-3xl font-bold">
-                          {"$"}
                           {watchProductDuration === "0"
-                            ? selectedProduct.price_membership_6
-                            : selectedProduct.price_membership_12}
+                            ? formatPrice(selectedProduct.price_membership_6)
+                            : formatPrice(selectedProduct.price_membership_12)}
                         </div>
                       </div>
                     </div>
@@ -812,9 +826,17 @@ export function Form({ onSubmit, products }: Props) {
                   <Input
                     maxLength={5}
                     id="max_amount"
-                    type="number"
+                    type="stirng"
                     placeholder="Ejemplo: 10000"
-                    {...register("max_amount")}
+                    /*  {...register("max_amount")} */
+                    disabled
+                    value={
+                      watchProductDuration === "0"
+                        ? formatPrice(selectedProduct?.price_membership_6 || "")
+                        : formatPrice(
+                            selectedProduct?.price_membership_12 || ""
+                          )
+                    }
                     className={errors.max_amount ? "border-red-500" : ""}
                   />
                 </div>

@@ -43,9 +43,9 @@ export const schema = yup.object().shape({
 
   street: yup.string().required("Calle es requerido"),
   ext_num: yup.string().required("Número Ext es requerido"),
-  int_num: yup.string().required("Número Int es requerido"),
+  int_num: yup.string().optional(),
   colony: yup.string().required("Colonia es requerido"),
-  person: yup.string().required("Persona es requerido"),
+  person: yup.string().optional(),
 
   cp: yup
     .string()
@@ -54,12 +54,11 @@ export const schema = yup.object().shape({
   municipe: yup.string().required("Alcaldia / Municipio es requerido"),
   state: yup.string().required("Estado es requerido"),
   city: yup.string().required("Ciudad es requerido"),
-  street_distance: yup.string().required("Entre que calles es requerido"),
-  street_distance1: yup.string().required("Entre que calles es requerido"),
+  street_distance: yup.string().optional(),
+  street_distance1: yup.string().optional(),
   delivery: yup.boolean().optional(),
 
   person_delivery: yup.string().optional(),
-
   street_delivery: yup.string().optional(),
   ext_num_delivery: yup.string().optional(),
   int_num_delivery: yup.string().optional(),
@@ -70,6 +69,7 @@ export const schema = yup.object().shape({
   state_delivery: yup.string().optional(),
   street_distance_delivery: yup.string().optional(),
   street_distance1_delivery: yup.string().optional(),
+
   institution: yup.string().required("Institución Financiera es requerido"),
   card_type: yup.string().required("Tipo de tarjeta es requerido"),
   full_name: yup.string().required("Nombre completo es requerido"),

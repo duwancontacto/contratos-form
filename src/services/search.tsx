@@ -22,3 +22,7 @@ export const sendContract = (contractPayload: any) => {
 export const getSign = (document_id: any) => {
   return axios.post(backendUrl + `/documents/${document_id}/sign`);
 };
+//eslint-disable-next-line
+export const sendEmail = (document_id: any) => {
+  return axios.post(backendUrl + `/documents/${document_id}/email`);
+};

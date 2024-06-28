@@ -77,12 +77,7 @@ export function Search({ setValue }: { setValue: any }) {
         setValue("colony", user.direccion.colonia);
         setValue("cp", user.direccion.codigoPostal);
         setValue("municipe", user.direccion.delgacionMunicipio);
-        setValue(
-          "city",
-          user.direccion.estado && user.direccion.ciudad
-            ? `${user.direccion.estado} / ${user.direccion.ciudad}`
-            : ""
-        );
+        setValue("city", user.direccion.ciudad);
         setValue("street_distance", user.direccion.referncias);
         toast.success("Paciente encontrado!");
         reset();
