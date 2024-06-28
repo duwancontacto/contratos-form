@@ -88,14 +88,12 @@ export default function App() {
       setShowLoading(true);
 
       const result = await sendContract(data);
-      console.log("result", result);
 
       const resultSign = await getSign(result.data.id);
-      console.log("resultSign", resultSign.data.body.data.signers[0].id);
       setShowLoading(false);
       performSignature(resultSign.data.body.data.signers[0].id, result.data.id);
     } catch (error) {
-      console.log("first", error);
+      console.log("error", error);
       setShowFalse(true);
       setShowLoading(false);
     }

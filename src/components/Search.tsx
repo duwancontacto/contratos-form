@@ -15,9 +15,13 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { autoPopulateProfile } from "../services/search";
 import toast from "react-hot-toast";
+import AddressModal from "./AddressModal";
 //eslint-disable-next-line
 export function Search({ setValue }: { setValue: any }) {
+  const [openDialog, setOpenDialog] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  //eslint-disable-next-line
+  const [data, setData] = useState<any>({});
   const {
     register,
     handleSubmit,
@@ -36,6 +40,9 @@ export function Search({ setValue }: { setValue: any }) {
         toast.error("Paciente no encontrado!");
       } else {
         const contact = result.data.contacts[0] || null;
+
+        setData(contact);
+        if (contact?.listaDireccion.length > 1) setOpenDialog(true);
 
         const {
           nombre = "",
@@ -91,38 +98,46 @@ export function Search({ setValue }: { setValue: any }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex justify-center">
-        <Card className="w-full max-w-md sm:max-w-4xl">
-          <CardHeader>
-            <CardTitle>Buscar paciente</CardTitle>
-          </CardHeader>
-          <CardContent className="grid  gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">
-                Correo electrónico
-                <ErrorLabel name="email" errors={errors} />
-              </Label>
-              <Input
-                id="email"
-                type="text"
-                placeholder="Ejemplo: Juan@dominio.com"
-                {...register("email")}
-                className={errors.email ? "border-red-500" : ""}
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-              disabled={showLoading}
-              className="w-full bg-fanafesa"
-              type="submit"
-            >
-              Buscar
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </form>
+    <>
+      <AddressModal
+        data={data}
+        setExternalValue={setValue}
+        open={openDialog}
+        setOpen={setOpenDialog}
+      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex justify-center">
+          <Card className="w-full max-w-md sm:max-w-4xl">
+            <CardHeader>
+              <CardTitle>Buscar paciente</CardTitle>
+            </CardHeader>
+            <CardContent className="grid  gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">
+                  Correo electrónico
+                  <ErrorLabel name="email" errors={errors} />
+                </Label>
+                <Input
+                  id="email"
+                  type="text"
+                  placeholder="Ejemplo: Juan@dominio.com"
+                  {...register("email")}
+                  className={errors.email ? "border-red-500" : ""}
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+                disabled={showLoading}
+                className="w-full bg-fanafesa"
+                type="submit"
+              >
+                Buscar
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </form>
+    </>
   );
 }
