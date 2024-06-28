@@ -73,7 +73,7 @@ export const schema = yup.object().shape({
   institution: yup.string().required("Institución Financiera es requerido"),
   card_type: yup.string().required("Tipo de tarjeta es requerido"),
   full_name: yup.string().required("Nombre completo es requerido"),
-  max_amount: yup.string().required("Monto máximo es requerido"),
+  max_amount: yup.string().optional(),
   product_id: yup.string().required("Producto es requerido"),
   product_duration: yup.string().required("Duración del producto es requerido"),
   digits: yup
