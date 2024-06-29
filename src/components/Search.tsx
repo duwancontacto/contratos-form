@@ -16,12 +16,30 @@ import { useState } from "react";
 import { autoPopulateProfile } from "../services/search";
 import toast from "react-hot-toast";
 import AddressModal from "./AddressModal";
-//eslint-disable-next-line
-export function Search({ setValue }: { setValue: any }) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
+
+interface SearchProps {
   //eslint-disable-next-line
-  const [data, setData] = useState<any>({});
+  setValue: any;
+  openDialog: boolean;
+  //eslint-disable-next-line
+  setOpenDialog: any;
+  //eslint-disable-next-line
+  data: any;
+  //eslint-disable-next-line
+  setData: any;
+  addressOption: string;
+}
+//eslint-disable-next-line
+export function Search({
+  setValue,
+  openDialog,
+  setOpenDialog,
+  data,
+  setData,
+  addressOption,
+}: SearchProps) {
+  const [showLoading, setShowLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -37,12 +55,11 @@ export function Search({ setValue }: { setValue: any }) {
       const result = await autoPopulateProfile(email);
 
       if (!result.data.results) {
-        toast.error("Paciente no encontrado!");
+        toast.error("Prosiga a ingresar sus datos.");
       } else {
         const contact = result.data.contacts[0] || null;
 
         setData(contact);
-        if (contact?.listaDireccion.length > 1) setOpenDialog(true);
 
         const {
           nombre = "",
@@ -92,7 +109,7 @@ export function Search({ setValue }: { setValue: any }) {
 
       setShowLoading(false);
     } catch (error) {
-      toast.error("Paciente no encontrado!");
+      toast.error("Prosiga a ingresar sus datos.");
       setShowLoading(false);
     }
   };
@@ -100,6 +117,7 @@ export function Search({ setValue }: { setValue: any }) {
   return (
     <>
       <AddressModal
+        addressOption={addressOption}
         data={data}
         setExternalValue={setValue}
         open={openDialog}

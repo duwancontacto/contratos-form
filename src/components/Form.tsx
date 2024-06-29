@@ -26,6 +26,7 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { Product } from "../interfaces/products";
 import { Search } from "./Search";
+import { useState } from "react";
 
 interface Props {
   //eslint-disable-next-line
@@ -47,6 +48,9 @@ export function Form({ onSubmit, products }: Props) {
     },
   });
 
+  const [openDialog, setOpenDialog] = useState(false);
+  //eslint-disable-next-line
+  const [data, setData] = useState<any>({});
   const watchDelivery = watch("delivery");
   const watchProductDuration = watch("product_duration");
   const watchProduct = watch("product_id");
@@ -78,7 +82,15 @@ export function Form({ onSubmit, products }: Props) {
 
   return (
     <>
-      <Search setValue={setValue} />
+      <Search
+        addressOption={watch("addressOption") || ""}
+        data={data}
+        setData={setData}
+        setValue={setValue}
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+      />
+
       <form onSubmit={handleSubmit(handleSend)}>
         <div className="flex justify-center">
           <Card className="w-full max-w-md sm:max-w-4xl">
@@ -211,7 +223,20 @@ export function Form({ onSubmit, products }: Props) {
         <div className="flex justify-center mt-5">
           <Card className="w-full max-w-md sm:max-w-4xl">
             <CardHeader>
-              <CardTitle>Domicilio </CardTitle>
+              <CardTitle className="flex justify-between">
+                <span> Domicilio</span>
+                {data.listaDireccion?.length > 1 && (
+                  <Button
+                    className=" bg-fanafesa"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setOpenDialog(true);
+                    }}
+                  >
+                    Consultar direcciones registradas
+                  </Button>
+                )}
+              </CardTitle>
             </CardHeader>
             <CardContent className="grid lg:grid-cols-2  gap-4">
               <div className="grid gap-2">
@@ -626,7 +651,7 @@ export function Form({ onSubmit, products }: Props) {
                   {" "}
                   <div className="grid gap-2">
                     <Label>
-                      Selecciona la Duración{" "}
+                      Selecciona el tipo de membresía
                       <ErrorLabel name="product_duration" errors={errors} />
                     </Label>
                     <div className="flex items-center gap-4">
@@ -658,10 +683,7 @@ export function Form({ onSubmit, products }: Props) {
                                   : "ps-2"
                               }
                             >
-                              6 meses -{" "}
-                              {formatPrice(
-                                selectedProduct?.price_membership_6 || ""
-                              )}
+                              6 meses
                             </label>
                           </div>
                           <div className="flex items-center">
@@ -680,10 +702,7 @@ export function Form({ onSubmit, products }: Props) {
                                   : "ps-2"
                               }
                             >
-                              12 meses -{" "}
-                              {formatPrice(
-                                selectedProduct?.price_membership_12 || ""
-                              )}
+                              12 meses
                             </label>
                           </div>
                         </RadioGroup>
@@ -818,7 +837,7 @@ export function Form({ onSubmit, products }: Props) {
                     className={errors.digits ? "border-red-500" : ""}
                   />
                 </div>
-                <div className="grid gap-2">
+                {/* <div className="grid gap-2">
                   <Label className="" htmlFor="max_amount">
                     Monto máximo fijo del cargo autorizado
                     <ErrorLabel name="max_amount" errors={errors} />
@@ -828,7 +847,7 @@ export function Form({ onSubmit, products }: Props) {
                     id="max_amount"
                     type="stirng"
                     placeholder="Ejemplo: 10000"
-                    /*  {...register("max_amount")} */
+                     {...register("max_amount")} 
                     disabled
                     value={
                       watchProductDuration === "0"
@@ -839,7 +858,7 @@ export function Form({ onSubmit, products }: Props) {
                     }
                     className={errors.max_amount ? "border-red-500" : ""}
                   />
-                </div>
+                </div> */}
               </div>
             </CardContent>
             <CardFooter>

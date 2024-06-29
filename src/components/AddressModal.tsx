@@ -26,7 +26,7 @@ import { Input } from "./ui/input";
 interface IContentModalProps {
   open: boolean;
   setOpen: (value: boolean) => void;
-
+  addressOption: string;
   setExternalValue: (label: string, value: string) => void;
   //eslint-disable-next-line
   data: {
@@ -52,6 +52,7 @@ export default function AddressModal({
   setOpen,
   data,
   setExternalValue,
+  addressOption,
 }: IContentModalProps) {
   const {
     handleSubmit,
@@ -72,7 +73,12 @@ export default function AddressModal({
   useEffect(() => {
     if (open) {
       reset();
-      setValue("option", data.listaDireccion[0].direccion.id);
+
+      setValue(
+        "option",
+        data.listaDireccion.find((item) => item.direccion.id === addressOption)
+          ?.direccion.id || ""
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -95,6 +101,7 @@ export default function AddressModal({
         estado,
         ciudad,
         referncias,
+        id,
       } = selectedDireccion.direccion;
 
       setExternalValue("street", calle);
@@ -106,6 +113,7 @@ export default function AddressModal({
       setExternalValue("state", estado);
       setExternalValue("city", ciudad);
       setExternalValue("street_distance", referncias);
+      setExternalValue("addressOption", id);
 
       setOpen(false);
     }
