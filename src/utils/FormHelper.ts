@@ -90,10 +90,7 @@ export const schema = yup.object().shape({
 });
 
 export const schemaSearch = yup.object().shape({
-  email: yup
-    .string()
-    .email("Correo electrónico no es válido")
-    .required("Correo electrónico es requerido"),
+  email: yup.string().required("Correo electrónico es requerido"),
 });
 export const schemaAddress = yup.object().shape({
   option: yup.string().required("La direccion es requerida"),

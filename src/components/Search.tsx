@@ -28,6 +28,7 @@ interface SearchProps {
   //eslint-disable-next-line
   setData: any;
   addressOption: string;
+  externalReset: () => void;
 }
 //eslint-disable-next-line
 export function Search({
@@ -36,6 +37,7 @@ export function Search({
   setOpenDialog,
   data,
   setData,
+  externalReset,
   addressOption,
 }: SearchProps) {
   const [showLoading, setShowLoading] = useState(false);
@@ -58,6 +60,8 @@ export function Search({
         toast("Prosiga a ingresar sus datos.", {
           icon: "👨‍⚕️",
         });
+        externalReset();
+        document.getElementById("first_name")?.focus();
       } else {
         const contact = result.data.contacts[0] || null;
 
@@ -105,6 +109,7 @@ export function Search({
         setValue("municipe", user.direccion.delgacionMunicipio);
         setValue("city", user.direccion.ciudad);
         setValue("street_distance", user.direccion.referncias);
+        setValue("addressOption", user.direccion.id);
         toast.success("Paciente encontrado!");
         reset();
       }
@@ -114,6 +119,8 @@ export function Search({
       toast("Prosiga a ingresar sus datos.", {
         icon: "👨‍⚕️",
       });
+      document.getElementById("first_name")?.focus();
+      externalReset();
       setShowLoading(false);
     }
   };
@@ -131,12 +138,15 @@ export function Search({
         <div className="flex justify-center">
           <Card className="w-full max-w-md sm:max-w-4xl">
             <CardHeader>
-              <CardTitle>Buscar paciente</CardTitle>
+              <CardTitle>
+                Si ya estás afilado con nosotros ingresa tu correo y presiona
+                buscar
+              </CardTitle>
             </CardHeader>
             <CardContent className="grid  gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">
-                  Correo electrónico
+                  Correo electrónico / Teléfono
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input

@@ -66,6 +66,8 @@ export function Form({ onSubmit, products }: Props) {
         watchProductDuration === "0"
           ? formatPrice(selectedProduct?.price_membership_6 || "")
           : formatPrice(selectedProduct?.price_membership_12 || "");
+
+      console.log("Ada", data);
       await onSubmit({ ...data, max_amount });
       reset();
     } catch (error) {
@@ -86,6 +88,7 @@ export function Form({ onSubmit, products }: Props) {
         addressOption={watch("addressOption") || ""}
         data={data}
         setData={setData}
+        externalReset={reset}
         setValue={setValue}
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
@@ -108,6 +111,13 @@ export function Form({ onSubmit, products }: Props) {
                   id="first_name"
                   placeholder="Ejemplo: Juan Miguel"
                   {...register("first_name")}
+                  onChange={(e) => {
+                    //all in mayuscules
+                    e.target.value = e.target.value.toUpperCase();
+                    setValue("first_name", e.target.value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   className={errors.first_name ? "border-red-500" : ""}
                 />
               </div>

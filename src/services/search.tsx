@@ -1,8 +1,12 @@
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const backendUrl = import.meta.env.VITE_BACK_URL;
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const autoPopulateProfile = (search: string) => {
-  const requestBody = { email: search };
+  const isEmailFormat = emailRegex.test(search);
+
+  const requestBody = isEmailFormat ? { email: search } : { telefono: search };
 
   return axios.post(baseUrl + "/api/auth/medic", requestBody);
 };
