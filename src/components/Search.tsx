@@ -110,7 +110,7 @@ export function Search({
         setValue("municipe", user.direccion.delgacionMunicipio);
         setValue("city", user.direccion.ciudad);
         setValue("street_distance", user.direccion.referncias);
-        setValue("addressOption", user.direccion.id);
+        setValue("addressOption", user.direccion.id_externo);
         toast.success("Paciente encontrado!");
         reset();
       }

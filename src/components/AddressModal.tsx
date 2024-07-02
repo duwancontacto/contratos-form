@@ -41,7 +41,7 @@ interface IContentModalProps {
         delgacionMunicipio: string;
         referncias: string;
         calle: string;
-        id: string;
+        id_externo: string;
       };
     }[];
   };
@@ -65,7 +65,7 @@ export default function AddressModal({
     defaultValues: {
       option:
         data.listaDireccion?.length > 0
-          ? data.listaDireccion[0].direccion.id
+          ? data.listaDireccion[0].direccion.id_externo
           : "",
     },
   });
@@ -76,8 +76,9 @@ export default function AddressModal({
 
       setValue(
         "option",
-        data.listaDireccion.find((item) => item.direccion.id === addressOption)
-          ?.direccion.id || ""
+        data.listaDireccion.find(
+          (item) => item.direccion.id_externo === addressOption
+        )?.direccion.id_externo || ""
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,7 +102,7 @@ export default function AddressModal({
         estado,
         ciudad,
         referncias,
-        id,
+        id_externo,
       } = selectedDireccion.direccion;
 
       setExternalValue("street", calle);
@@ -113,14 +114,14 @@ export default function AddressModal({
       setExternalValue("state", estado);
       setExternalValue("city", ciudad);
       setExternalValue("street_distance", referncias);
-      setExternalValue("addressOption", id);
+      setExternalValue("addressOption", id_externo);
 
       setOpen(false);
     }
   };
 
   const selectedDireccion = data.listaDireccion?.find(
-    (direccion) => direccion.direccion.id === watch("option")
+    (direccion) => direccion.direccion.id_externo === watch("option")
   );
 
   return (
@@ -148,7 +149,7 @@ export default function AddressModal({
               </SelectTrigger>
               <SelectContent>
                 {data.listaDireccion?.map((item, index: number) => (
-                  <SelectItem key={index} value={item.direccion.id}>
+                  <SelectItem key={index} value={item.direccion.id_externo}>
                     {item.direccion.estado} / {item.direccion.ciudad} /{" "}
                     {item.direccion.calle}
                   </SelectItem>
