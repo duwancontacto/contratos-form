@@ -55,7 +55,9 @@ export function Search({
       const result = await autoPopulateProfile(email);
 
       if (!result.data.results) {
-        toast.error("Prosiga a ingresar sus datos.");
+        toast("Prosiga a ingresar sus datos.", {
+          icon: "👨‍⚕️",
+        });
       } else {
         const contact = result.data.contacts[0] || null;
 
@@ -109,7 +111,9 @@ export function Search({
 
       setShowLoading(false);
     } catch (error) {
-      toast.error("Prosiga a ingresar sus datos.");
+      toast("Prosiga a ingresar sus datos.", {
+        icon: "👨‍⚕️",
+      });
       setShowLoading(false);
     }
   };

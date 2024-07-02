@@ -717,7 +717,7 @@ export function Form({ onSubmit, products }: Props) {
                       <div className="text-gray-500">
                         {selectedProduct.varcode}
                       </div>
-                      <Label>Precio</Label>
+                      {/* <Label>Precio</Label>
                       <div className="flex flex-col items-start justify-start">
                         <div className="text-sm font-bold line-through text-gray-500">
                           {formatPrice(selectedProduct.price_list)}
@@ -727,7 +727,7 @@ export function Form({ onSubmit, products }: Props) {
                             ? formatPrice(selectedProduct.price_membership_6)
                             : formatPrice(selectedProduct.price_membership_12)}
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   )}
                 </>

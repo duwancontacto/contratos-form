@@ -27,7 +27,10 @@ export const schema = yup.object().shape({
   card_new: yup.string().required("Nueva tarjeta es requerido"),
   last_name1: yup.string().required("Apellido paterno es requerido"),
   last_name2: yup.string().required("Apellido materno es requerido"),
-  curp: yup.string().required("CURP es requerido"),
+  curp: yup
+    .string()
+    .required("CURP es requerido")
+    .length(18, "Debe tener 18 dígitos"),
   specialty: yup.string().required("Especialidad Médica es requerida"),
   gender: yup.string().required("Genero es requerido"),
   idCX: yup.string().optional(),
@@ -40,7 +43,7 @@ export const schema = yup.object().shape({
     .string()
     .typeError("Debe ser un número")
     .required("Télefono es requerido")
-    .length(10, "Debe ser de 10 dígitos"),
+    .length(10, "Debe tener 10 dígitos"),
 
   street: yup.string().required("Calle es requerido"),
   ext_num: yup.string().required("Número Ext es requerido"),
@@ -51,7 +54,7 @@ export const schema = yup.object().shape({
   cp: yup
     .string()
     .required("C.P es requerido")
-    .length(5, "Debe ser de 5 dígitos"),
+    .length(5, "Debe tener 5 dígitos"),
   municipe: yup.string().required("Alcaldia / Municipio es requerido"),
   state: yup.string().required("Estado es requerido"),
   city: yup.string().required("Ciudad es requerido"),
