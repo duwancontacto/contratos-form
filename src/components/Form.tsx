@@ -406,22 +406,24 @@ export function Form({ onSubmit, products }: Props) {
 
               <div></div>
 
-              <div className="flex ">
-                <Checkbox
-                  id="delivery"
-                  {...register("delivery")}
-                  onCheckedChange={(e: boolean) => {
-                    setValue("delivery", e, {
-                      shouldValidate: true,
-                    });
-                  }}
-                />
-                <Label htmlFor="delivery" className="ps-2">
-                  ¿Desea que la entrega sea en otro domicilio?
-                </Label>
-              </div>
+              {watch("addressOption") && (
+                <div className="flex ">
+                  <Checkbox
+                    id="delivery"
+                    {...register("delivery")}
+                    onCheckedChange={(e: boolean) => {
+                      setValue("delivery", e, {
+                        shouldValidate: true,
+                      });
+                    }}
+                  />
+                  <Label htmlFor="delivery" className="ps-2">
+                    ¿Desea que la entrega sea en otro domicilio?
+                  </Label>
+                </div>
+              )}
 
-              {watchDelivery === true && (
+              {watchDelivery === true && watch("addressOption") && (
                 <>
                   <div></div>
                   <CardTitle className="w-full my-5">

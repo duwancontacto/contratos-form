@@ -61,6 +61,7 @@ export function Search({
           icon: "👨‍⚕️",
         });
         externalReset();
+        setData({});
         document.getElementById("first_name")?.focus();
       } else {
         const contact = result.data.contacts[0] || null;
@@ -121,6 +122,7 @@ export function Search({
       });
       document.getElementById("first_name")?.focus();
       externalReset();
+      setData({});
       setShowLoading(false);
     }
   };
