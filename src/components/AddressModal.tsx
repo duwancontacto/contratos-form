@@ -128,7 +128,7 @@ export default function AddressModal({
     <Dialog open={open} onOpenChange={() => setOpen(false)}>
       <DialogContent className="sm:max-w-[625px] w-full">
         <DialogHeader>
-          <DialogTitle>Seleccionar otra direccion</DialogTitle>
+          <DialogTitle>Seleccionar otra dirección</DialogTitle>
         </DialogHeader>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-2">
