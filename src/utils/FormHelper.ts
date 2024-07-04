@@ -24,7 +24,10 @@ export type FormData = {
 export const schema = yup.object().shape({
   addressOption: yup.string().optional(),
   first_name: yup.string().required("Nombre es requerido"),
-  card_new: yup.string().required("Nueva tarjeta es requerido"),
+  card_new: yup
+    .string()
+    .required("Nueva tarjeta es requerido")
+    .length(18, "Debe tener 13 dígitos"),
   last_name1: yup.string().required("Apellido paterno es requerido"),
   last_name2: yup.string().required("Apellido materno es requerido"),
   curp: yup
