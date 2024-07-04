@@ -88,6 +88,10 @@ export function Search({
             (contact?.listaTelefonos &&
               contact?.listaTelefonos[0]?.telefono?.NumeroTelefonico) ||
             "",
+          phoneId:
+            (contact?.listaTelefonos &&
+              contact?.listaTelefonos[0]?.telefono?.IDExterno) ||
+            "",
           direccion:
             (contact?.listaDireccion &&
               contact?.listaDireccion[0]?.direccion) ||
@@ -100,6 +104,7 @@ export function Search({
 
         setValue("email", user.email);
         setValue("phone", user.phone);
+        setValue("id_phone", user.phoneId);
         setValue("idCX", idExterno);
         setValue("street", user.direccion.calle);
         setValue("state", user.direccion.estado);

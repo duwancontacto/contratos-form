@@ -27,7 +27,7 @@ export const schema = yup.object().shape({
   card_new: yup
     .string()
     .required("Nueva tarjeta es requerido")
-    .length(18, "Debe tener 13 dígitos"),
+    .length(13, "Debe tener 13 dígitos"),
   last_name1: yup.string().required("Apellido paterno es requerido"),
   last_name2: yup.string().required("Apellido materno es requerido"),
   curp: yup
@@ -53,7 +53,7 @@ export const schema = yup.object().shape({
   int_num: yup.string().optional(),
   colony: yup.string().required("Colonia es requerido"),
   person: yup.string().optional(),
-
+  id_phone: yup.string().optional(),
   cp: yup
     .string()
     .required("C.P es requerido")

@@ -153,6 +153,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="curp" errors={errors} />
                 </Label>
                 <Input
+                  maxLength={18}
                   type="text"
                   id="curp"
                   placeholder="Ejemplo: PEGJ850315HJCRRN07"
@@ -181,9 +182,19 @@ export function Form({ onSubmit, products }: Props) {
                 </Label>
                 <Input
                   id="phone"
+                  maxLength={13}
                   placeholder="Ingresa tu número de teléfono"
                   type="number"
                   {...register("phone")}
+                  onChange={(event) => {
+                    let value = event.target.value;
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+                    setValue("phone", value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   className={errors.phone ? "border-red-500" : ""}
                 />
               </div>
@@ -220,6 +231,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="card_new" errors={errors} />
                 </Label>
                 <Input
+                  maxLength={13}
                   type="text"
                   id="card_new"
                   placeholder="Ejemplo: 4259452994"
@@ -302,10 +314,20 @@ export function Form({ onSubmit, products }: Props) {
                   C.P <ErrorLabel name="cp" errors={errors} />
                 </Label>
                 <Input
+                  maxLength={5}
                   type="number"
                   id="cp"
                   placeholder="Ejemplo: 12345"
                   {...register("cp")}
+                  onChange={(event) => {
+                    let value = event.target.value;
+                    if (value.length > 5) {
+                      value = value.slice(0, 5);
+                    }
+                    setValue("cp", value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   className={errors.cp ? "border-red-500" : ""}
                 />
               </div>
@@ -846,6 +868,15 @@ export function Form({ onSubmit, products }: Props) {
                     type="number"
                     placeholder="Ejemplo: 12345"
                     {...register("digits")}
+                    onChange={(event) => {
+                      let value = event.target.value;
+                      if (value.length > 5) {
+                        value = value.slice(0, 5);
+                      }
+                      setValue("digits", value, {
+                        shouldValidate: true,
+                      });
+                    }}
                     className={errors.digits ? "border-red-500" : ""}
                   />
                 </div>
