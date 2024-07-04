@@ -388,7 +388,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="street_distance">
-                  Entre qué calle (1)
+                  Entre calle (1)
                   <ErrorLabel name="street_distance" errors={errors} />
                 </Label>
                 <Input
@@ -401,7 +401,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="street_distance1">
-                  Entre qué calle (2)
+                  Entre calle (2)
                   <ErrorLabel name="street_distance1" errors={errors} />
                 </Label>
                 <Input
@@ -581,7 +581,7 @@ export function Form({ onSubmit, products }: Props) {
                   </div>
                   <div className="grid gap-2">
                     <Label className="" htmlFor="street_distance_delivery">
-                      Entre qué calle (1)
+                      Entre calle (1)
                       <ErrorLabel
                         name="street_distance_delivery"
                         errors={errors}
@@ -599,7 +599,7 @@ export function Form({ onSubmit, products }: Props) {
                   </div>
                   <div className="grid gap-2">
                     <Label className="" htmlFor="street_distance1_delivery">
-                      Entre qué calle (2)
+                      Entre calle (2)
                       <ErrorLabel
                         name="street_distance1_delivery"
                         errors={errors}
