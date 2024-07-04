@@ -787,8 +787,8 @@ export function Form({ onSubmit, products }: Props) {
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Crédito">Crédito</SelectItem>
-                      <SelectItem value="Débito">Débito</SelectItem>
+                      <SelectItem value="0">Crédito</SelectItem>
+                      <SelectItem value="1">Débito</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -818,8 +818,8 @@ export function Form({ onSubmit, products }: Props) {
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Física">Física</SelectItem>
-                      <SelectItem value="Digital">Digital</SelectItem>
+                      <SelectItem value="0">Física</SelectItem>
+                      <SelectItem value="1">Digital</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
