@@ -11,7 +11,7 @@ export function Success({ handleReset }: { handleReset: () => void }) {
               </h1>
               <p className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Gracias por registrarte. Nos pondremos en contacto contigo
-                pronto. Revisa tu correo ya que tendrás un copia del contrato
+                pronto. Revisa tu correo ya que tendrás una copia del contrato
                 firmado.
               </p>
               <div className="mt-6">

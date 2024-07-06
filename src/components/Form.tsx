@@ -200,7 +200,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="gender">
-                  Genero
+                  Género
                   <ErrorLabel name="gender" errors={errors} />
                 </Label>
                 <Select
@@ -216,7 +216,7 @@ export function Form({ onSubmit, products }: Props) {
                   >
                     <SelectValue
                       id="gender"
-                      placeholder="Selecciona el genero"
+                      placeholder="Selecciona el género"
                     />
                   </SelectTrigger>
                   <SelectContent>
@@ -232,10 +232,19 @@ export function Form({ onSubmit, products }: Props) {
                 </Label>
                 <Input
                   maxLength={13}
-                  type="text"
+                  type="number"
                   id="card_new"
                   placeholder="Ejemplo: 4259452994"
                   {...register("card_new")}
+                  onChange={(event) => {
+                    let value = event.target.value;
+                    if (value.length > 13) {
+                      value = value.slice(0, 13);
+                    }
+                    setValue("card_new", value, {
+                      shouldValidate: true,
+                    });
+                  }}
                   className={errors.card_new ? "border-red-500" : ""}
                 />
               </div>
@@ -642,7 +651,7 @@ export function Form({ onSubmit, products }: Props) {
             <CardContent className="grid gap-4">
               <div className="grid gap-2">
                 <Label className="" htmlFor="specialty">
-                  Especialidad Médica
+                  Especialidad del Médico
                   <ErrorLabel name="specialty" errors={errors} />
                 </Label>
                 <Input
@@ -655,7 +664,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="product">
-                  Selecciona un Producto{" "}
+                  Selecciona el Producto a domiciliar
                   <ErrorLabel name="product" errors={errors} />
                 </Label>
                 <Select
@@ -859,19 +868,19 @@ export function Form({ onSubmit, products }: Props) {
                 </div>
                 <div className="grid gap-2">
                   <Label className="" htmlFor="digits">
-                    Últimos 5 dígitos de la tarjeta
+                    Últimos 4 dígitos de la tarjeta
                     <ErrorLabel name="digits" errors={errors} />
                   </Label>
                   <Input
-                    maxLength={5}
+                    maxLength={4}
                     id="digits"
                     type="number"
-                    placeholder="Ejemplo: 12345"
+                    placeholder="Ejemplo: 1234"
                     {...register("digits")}
                     onChange={(event) => {
                       let value = event.target.value;
-                      if (value.length > 5) {
-                        value = value.slice(0, 5);
+                      if (value.length > 4) {
+                        value = value.slice(0, 4);
                       }
                       setValue("digits", value, {
                         shouldValidate: true,
