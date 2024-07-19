@@ -85,8 +85,8 @@ export const schema = yup.object().shape({
   product_duration: yup.string().required("Duración del producto es requerido"),
   digits: yup
     .string()
-    .required("Últimos 5 dígitos de la tarjeta es requerido")
-    .length(5, "Debe ser de 5 dígitos"),
+    .required("Últimos 4 dígitos de la tarjeta es requerido")
+    .length(4, "Debe ser de 4 dígitos"),
   card_physical_or_digital: yup
     .string()
     .required("Tarjeta física o digital es requerido"),
