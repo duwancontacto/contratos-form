@@ -133,7 +133,7 @@ export default function AddressModal({
         <form className="grid gap-4 py-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-2">
             <Label className="" htmlFor="option">
-              Direccion
+              Dirección
               <ErrorLabel name="option" errors={errors} />
             </Label>
             <Select

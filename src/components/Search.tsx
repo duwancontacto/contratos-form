@@ -146,14 +146,14 @@ export function Search({
           <Card className="w-full max-w-md sm:max-w-4xl">
             <CardHeader>
               <CardTitle>
-                Si ya estás afilado con nosotros ingresa tu correo y presiona
+                Si ya estás afiliado con nosotros ingresa tu correo y presiona
                 buscar
               </CardTitle>
             </CardHeader>
             <CardContent className="grid  gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">
-                  Correo electrónico / Teléfono
+                  Correo electrónico
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input

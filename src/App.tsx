@@ -109,7 +109,7 @@ export default function App() {
       <header className="flex items-center justify-center px-4 py-3 bg-fanafesa text-white">
         <a className="flex items-center gap-2" href="#">
           <span className="text-lg font-bold text-center">
-            Farmacias especializadas
+            FARMACIAS ESPECIALIZADAS
           </span>
         </a>
       </header>

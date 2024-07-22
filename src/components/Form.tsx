@@ -103,7 +103,7 @@ export function Form({ onSubmit, products }: Props) {
             <CardContent className="grid lg:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label className="" htmlFor="first_name">
-                  Nombre
+                  Nombre *
                   <ErrorLabel name="first_name" errors={errors} />
                 </Label>
                 <Input
@@ -123,7 +123,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="last_name1">
-                  Apellido Paterno
+                  Apellido Paterno *
                   <ErrorLabel name="last_name1" errors={errors} />
                 </Label>
                 <Input
@@ -136,7 +136,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="last_name2">
-                  Apellido Materno
+                  Apellido Materno *
                   <ErrorLabel name="last_name2" errors={errors} />
                 </Label>
                 <Input
@@ -149,7 +149,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="curp">
-                  CURP
+                  CURP *
                   <ErrorLabel name="curp" errors={errors} />
                 </Label>
                 <Input
@@ -164,7 +164,7 @@ export function Form({ onSubmit, products }: Props) {
 
               <div className="grid gap-2">
                 <Label className="" htmlFor="email">
-                  Correo electrónico
+                  Correo electrónico *
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input
@@ -177,7 +177,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="phone">
-                  Télefono
+                  Teléfono *
                   <ErrorLabel name="phone" errors={errors} />
                 </Label>
                 <Input
@@ -200,7 +200,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="gender">
-                  Género
+                  Género *
                   <ErrorLabel name="gender" errors={errors} />
                 </Label>
                 <Select
@@ -227,7 +227,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="card_new">
-                  Número de tarjeta Nuevo Yo
+                  Número de tarjeta Nuevo Yo *
                   <ErrorLabel name="card_new" errors={errors} />
                 </Label>
                 <Input
@@ -272,7 +272,7 @@ export function Form({ onSubmit, products }: Props) {
             <CardContent className="grid lg:grid-cols-2  gap-4">
               <div className="grid gap-2">
                 <Label className="" htmlFor="street">
-                  Calle <ErrorLabel name="street" errors={errors} />
+                  Calle * <ErrorLabel name="street" errors={errors} />
                 </Label>
                 <Input
                   type="text"
@@ -284,7 +284,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="ext_num">
-                  Número Ext <ErrorLabel name="ext_num" errors={errors} />
+                  Número Ext * <ErrorLabel name="ext_num" errors={errors} />
                 </Label>
                 <Input
                   type="text"
@@ -308,7 +308,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="colony">
-                  Colonia <ErrorLabel name="colony" errors={errors} />
+                  Colonia * <ErrorLabel name="colony" errors={errors} />
                 </Label>
                 <Input
                   type="text"
@@ -320,7 +320,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="cp">
-                  C.P <ErrorLabel name="cp" errors={errors} />
+                  C.P * <ErrorLabel name="cp" errors={errors} />
                 </Label>
                 <Input
                   maxLength={5}
@@ -342,7 +342,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="municipe">
-                  Alcaldía / Municipio{" "}
+                  Alcaldía / Municipio *
                   <ErrorLabel name="municipe" errors={errors} />
                 </Label>
                 <Input
@@ -355,7 +355,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="state">
-                  Estado
+                  Estado *
                   <ErrorLabel name="state" errors={errors} />
                 </Label>
 
@@ -384,7 +384,7 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="city">
-                  Ciudad
+                  Ciudad *
                   <ErrorLabel name="city" errors={errors} />
                 </Label>
                 <Input
@@ -646,12 +646,12 @@ export function Form({ onSubmit, products }: Props) {
         <div className="flex justify-center mt-5">
           <Card className="w-full max-w-md sm:max-w-4xl">
             <CardHeader>
-              <CardTitle>Producto</CardTitle>
+              <CardTitle>Médico-Producto</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="grid gap-2">
                 <Label className="" htmlFor="specialty">
-                  Especialidad del Médico
+                  Especialidad del Médico *
                   <ErrorLabel name="specialty" errors={errors} />
                 </Label>
                 <Input
@@ -664,8 +664,8 @@ export function Form({ onSubmit, products }: Props) {
               </div>
               <div className="grid gap-2">
                 <Label className="" htmlFor="product">
-                  Selecciona el Producto a domiciliar
-                  <ErrorLabel name="product" errors={errors} />
+                  Selecciona el Producto a domiciliar *
+                  <ErrorLabel name="product_id" errors={errors} />
                 </Label>
                 <Select
                   onValueChange={(value) =>
@@ -694,7 +694,7 @@ export function Form({ onSubmit, products }: Props) {
                   {" "}
                   <div className="grid gap-2">
                     <Label>
-                      Selecciona el tipo de membresía
+                      Selecciona el tipo de membresía *
                       <ErrorLabel name="product_duration" errors={errors} />
                     </Label>
                     <div className="flex items-center gap-4">
@@ -787,7 +787,7 @@ export function Form({ onSubmit, products }: Props) {
               <div className="grid  lg:grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label className="" htmlFor="institution">
-                    Institución Financiera
+                    Institución Financiera *
                     <ErrorLabel name="institution" errors={errors} />
                   </Label>
                   <Input
@@ -799,7 +799,7 @@ export function Form({ onSubmit, products }: Props) {
                 </div>
                 <div className="grid gap-2">
                   <Label className="" htmlFor="card_type">
-                    Tipo de tarjeta
+                    Tipo de tarjeta *
                     <ErrorLabel name="card_type" errors={errors} />
                   </Label>
                   <Select
@@ -825,7 +825,7 @@ export function Form({ onSubmit, products }: Props) {
                 </div>
                 <div className="grid gap-2">
                   <Label className="" htmlFor="card_physical_or_digital">
-                    Tarjeta física o digital
+                    Tarjeta física o digital *
                     <ErrorLabel
                       name="card_physical_or_digital"
                       errors={errors}
@@ -856,7 +856,7 @@ export function Form({ onSubmit, products }: Props) {
                 </div>
                 <div className="grid gap-2">
                   <Label className="" htmlFor="full_name">
-                    Nombre completo del Titular
+                    Nombre completo del Titular *
                     <ErrorLabel name="full_name" errors={errors} />
                   </Label>
                   <Input
@@ -868,7 +868,7 @@ export function Form({ onSubmit, products }: Props) {
                 </div>
                 <div className="grid gap-2">
                   <Label className="" htmlFor="digits">
-                    Últimos 4 dígitos de la tarjeta
+                    Últimos 4 dígitos de la tarjeta *
                     <ErrorLabel name="digits" errors={errors} />
                   </Label>
                   <Input
@@ -915,7 +915,7 @@ export function Form({ onSubmit, products }: Props) {
             </CardContent>
             <CardFooter>
               <Button className="w-full bg-fanafesa" type="submit">
-                Enviar Registro
+                Registro
               </Button>
             </CardFooter>
           </Card>
