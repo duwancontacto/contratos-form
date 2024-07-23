@@ -107,7 +107,11 @@ export function Search({
         setValue("id_phone", user.phoneId);
         setValue("idCX", idExterno);
         setValue("street", user.direccion.calle);
-        setValue("state", user.direccion.estado);
+        if (user.direccion.estado === "ESTADO DE MEXICO") {
+          setValue("state", "MEXICO");
+        } else {
+          setValue("state", user.direccion.estado);
+        }
         setValue("ext_num", user.direccion.numeroExterior);
         setValue("int_num", user.direccion.numeroInterior);
         setValue("colony", user.direccion.colonia);

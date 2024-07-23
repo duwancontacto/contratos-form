@@ -111,7 +111,11 @@ export default function AddressModal({
       setExternalValue("colony", colonia);
       setExternalValue("cp", codigoPostal);
       setExternalValue("municipe", delgacionMunicipio);
-      setExternalValue("state", estado);
+      if (estado === "ESTADO DE MEXICO") {
+        setExternalValue("state", "MEXICO");
+      } else {
+        setExternalValue("state", estado);
+      }
       setExternalValue("city", ciudad);
       setExternalValue("street_distance", referncias);
       setExternalValue("addressOption", id_externo);
