@@ -11,7 +11,7 @@ export function Loading() {
                 Cargando...
               </h1>
               <p className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Espera mientras verificamos la informacion.
+                Espera mientras verificamos la información.
               </p>
             </div>
           </div>

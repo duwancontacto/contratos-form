@@ -97,6 +97,7 @@ export function Search({
               contact?.listaDireccion[0]?.direccion) ||
             {},
         };
+        externalReset();
         setValue("first_name", user.first_name);
         setValue("last_name1", user.last_name1);
         setValue("last_name2", user.last_name2);
