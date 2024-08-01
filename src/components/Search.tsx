@@ -158,7 +158,7 @@ export function Search({
             <CardContent className="grid  gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">
-                  Correo electrónico
+                  Correo electrónico *
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input
