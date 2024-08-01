@@ -132,7 +132,7 @@ export default function App() {
                   Completa este formulario para registrar tu contrato.
                 </p>
                 <span className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400 pt-3">
-                  Campos marcados con (*) son obligatorios
+                  Los campos marcados con (*) son obligatorios
                 </span>
               </div>
 
