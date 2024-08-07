@@ -62,6 +62,7 @@ export function Search({
         });
         externalReset();
         setData({});
+        setValue("email", email);
         document.getElementById("first_name")?.focus();
       } else {
         const contact = result.data.contacts[0] || null;
