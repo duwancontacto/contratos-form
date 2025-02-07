@@ -101,6 +101,7 @@ export function Search({
         externalReset();
         setValue("first_name", user.first_name);
         setValue("last_name1", user.last_name1);
+        setValue("type", tipo);
         setValue("last_name2", user.last_name2);
         setValue("gender", sexo === "Masculino" ? "M" : "F");
 
