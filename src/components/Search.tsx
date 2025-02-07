@@ -75,6 +75,7 @@ export function Search({
           apellidoMaterno = "",
           idExterno,
           sexo,
+          tipo,
         } = contact.datosGenerales || {};
 
         const user = {
