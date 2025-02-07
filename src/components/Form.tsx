@@ -24,7 +24,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
-import { Product } from "../interfaces/products";
+import { Plan, Product } from "../interfaces/products";
 import { Search } from "./Search";
 import { useState } from "react";
 
@@ -52,7 +52,7 @@ export function Form({ onSubmit, products }: Props) {
   //eslint-disable-next-line
   const [data, setData] = useState<any>({});
   const watchDelivery = watch("delivery");
-  const watchProductDuration = watch("product_duration");
+
   const watchProduct = watch("product_id");
 
   const selectedProduct = products.find(
@@ -62,25 +62,15 @@ export function Form({ onSubmit, products }: Props) {
   //eslint-disable-next-line
   const handleSend = async (data: any) => {
     try {
-      const max_amount =
-        watchProductDuration === "0"
-          ? formatPrice(selectedProduct?.price_membership_6 || "")
-          : formatPrice(selectedProduct?.price_membership_12 || "");
-
-      console.log("Ada", data);
-      await onSubmit({ ...data, max_amount });
+      const plan = selectedProduct?.plans.find(
+        (plan: Plan) => plan.id.toString() === data.plan_id.toString()
+      );
+      await onSubmit({ ...data, product_duration: plan?.duration });
       reset();
     } catch (error) {
       console.log("error", error);
     }
   };
-
-  function formatPrice(precio: string): string {
-    return new Intl.NumberFormat("es-MX", {
-      style: "currency",
-      currency: "MXN",
-    }).format(Number(precio));
-  }
 
   return (
     <>
@@ -695,64 +685,45 @@ export function Form({ onSubmit, products }: Props) {
                   <div className="grid gap-2">
                     <Label>
                       Selecciona el tipo de membresía *
-                      <ErrorLabel name="product_duration" errors={errors} />
+                      <ErrorLabel name="plan_id" errors={errors} />
                     </Label>
                     <div className="flex items-center gap-4">
                       <Label
-                        htmlFor="product_duration-6"
+                        htmlFor="plan_id-6"
                         className="flex items-center gap-2 cursor-pointer "
                       >
                         <RadioGroup
                           className="flex items-center"
                           onValueChange={(value) =>
-                            setValue("product_duration", value, {
+                            setValue("plan_id", value, {
                               shouldValidate: true,
                             })
                           }
                         >
-                          <div className="flex items-center">
-                            <RadioGroupItem
-                              id="product_duration-6"
-                              value="0"
-                              className={
-                                errors.product_duration ? "border-red-500" : ""
-                              }
-                            />
-                            <label
-                              htmlFor="product_duration-6"
-                              className={
-                                errors.product_duration
-                                  ? "text-red-500 ps-2"
-                                  : "ps-2"
-                              }
-                            >
-                              6 meses
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <RadioGroupItem
-                              id="product_duration-12"
-                              value="1"
-                              className={
-                                errors.product_duration ? "border-red-500" : ""
-                              }
-                            />
-                            <label
-                              htmlFor="product_duration-12"
-                              className={
-                                errors.product_duration
-                                  ? "text-red-500 ps-2"
-                                  : "ps-2"
-                              }
-                            >
-                              12 meses
-                            </label>
-                          </div>
+                          {selectedProduct?.plans.map((plan: Plan) => (
+                            <div className="flex items-center">
+                              <RadioGroupItem
+                                id={`plan_id-${plan.id}`}
+                                value={plan.id}
+                                className={
+                                  errors.plan_id ? "border-red-500" : ""
+                                }
+                              />
+                              <label
+                                htmlFor={`plan_id-${plan.id}`}
+                                className={
+                                  errors.plan_id ? "text-red-500 ps-2" : "ps-2"
+                                }
+                              >
+                                {plan.name}
+                              </label>
+                            </div>
+                          ))}
                         </RadioGroup>
                       </Label>
                     </div>
                   </div>
-                  {selectedProduct && watchProductDuration && (
+                  {selectedProduct && (
                     <div className=" ">
                       <div className="text-2xl font-bold">
                         {selectedProduct.description}
@@ -760,17 +731,6 @@ export function Form({ onSubmit, products }: Props) {
                       <div className="text-gray-500">
                         {selectedProduct.varcode}
                       </div>
-                      {/* <Label>Precio</Label>
-                      <div className="flex flex-col items-start justify-start">
-                        <div className="text-sm font-bold line-through text-gray-500">
-                          {formatPrice(selectedProduct.price_list)}
-                        </div>
-                        <div className="text-3xl font-bold">
-                          {watchProductDuration === "0"
-                            ? formatPrice(selectedProduct.price_membership_6)
-                            : formatPrice(selectedProduct.price_membership_12)}
-                        </div>
-                      </div> */}
                     </div>
                   )}
                 </>

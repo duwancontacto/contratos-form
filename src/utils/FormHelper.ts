@@ -19,9 +19,11 @@ export type FormData = {
   card_type: string;
   digits: string;
   card_physical_or_digital: string;
+  plan_id: string;
 };
 
 export const schema = yup.object().shape({
+  plan_id: yup.string().required("Plan requerido"),
   addressOption: yup.string().optional(),
   first_name: yup.string().required("Nombre requerido"),
   card_new: yup
@@ -79,7 +81,6 @@ export const schema = yup.object().shape({
   full_name: yup.string().required("Nombre completo requerido"),
   max_amount: yup.string().optional(),
   product_id: yup.string().required("Producto requerido"),
-  product_duration: yup.string().required("Duración del producto requerida"),
   digits: yup
     .string()
     .required("Últimos 4 dígitos de la tarjeta requeridos")
