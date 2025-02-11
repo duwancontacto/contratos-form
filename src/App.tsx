@@ -44,10 +44,9 @@ export default function App() {
 
   //eslint-disable-next-line
   function signatureFinish(data: any, document_id: string) {
-    if (
-      data.documents[0].status === "approved" &&
-      data.signer.status === "confirmed"
-    ) {
+    console.log("Payload", data);
+    if (data.signer.status === "confirmed") {
+      console.log("Document id ", document_id);
       setShowSuccess(true);
       setShowLoading(false);
       sendEmail(document_id);
@@ -55,6 +54,17 @@ export default function App() {
       toast.error("Ha ocurrido un error durante el proceso de firma.");
     }
   }
+
+  useEffect(() => {
+    const metaTag = document.createElement("meta");
+    metaTag.httpEquiv = "Cache-Control";
+    metaTag.content = "no-store, no-cache, must-revalidate";
+    document.head.appendChild(metaTag);
+
+    return () => {
+      document.head.removeChild(metaTag);
+    };
+  }, []);
 
   const performSignature = (signerId: string, id: string) => {
     //eslint-disable-next-line
