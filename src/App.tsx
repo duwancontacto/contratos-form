@@ -11,6 +11,7 @@ import {
   getSign,
   sendContract,
   sendEmail,
+  sendLog,
 } from "./services/search";
 import { Form } from "./components/Form";
 import { Product } from "./interfaces/products";
@@ -45,14 +46,19 @@ export default function App() {
   //eslint-disable-next-line
   function signatureFinish(data: any, document_id: string) {
     console.log("Payload", data);
-    if (data.signer.status === "confirmed") {
+    /*  if (data.signer.status === "confirmed") {
       console.log("Document id ", document_id);
       setShowSuccess(true);
       setShowLoading(false);
       sendEmail(document_id);
     } else {
       toast.error("Ha ocurrido un error durante el proceso de firma.");
-    }
+    } */
+
+    sendLog(document_id, data);
+    setShowSuccess(true);
+    setShowLoading(false);
+    sendEmail(document_id);
   }
 
   useEffect(() => {
@@ -79,6 +85,7 @@ export default function App() {
         {
           signerId: signerId,
           modules: ["documents", "signature"],
+          send_invite: false,
           authType: "NONE",
           callbacks: {
             //eslint-disable-next-line

@@ -55,6 +55,8 @@ export function Form({ onSubmit, products }: Props) {
 
   const watchProduct = watch("product_id");
 
+  const idCx = watch("idCX");
+
   const selectedProduct = products.find(
     (product: Product) => product.id.toString() === watchProduct
   );
@@ -99,6 +101,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="first_name"
+                  disabled={idCx}
                   placeholder="Ejemplo: Juan Miguel"
                   {...register("first_name")}
                   onChange={(e) => {
@@ -117,6 +120,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="last_name1" errors={errors} />
                 </Label>
                 <Input
+                  disabled={idCx}
                   type="text"
                   id="last_name1"
                   placeholder="Ejemplo: Pérez"
@@ -130,6 +134,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="last_name2" errors={errors} />
                 </Label>
                 <Input
+                  disabled={idCx}
                   type="text"
                   id="last_name2"
                   placeholder="Ejemplo: Fernandez"
@@ -158,6 +163,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input
+                  disabled={idCx}
                   id="email"
                   type="text"
                   placeholder="Ejemplo: Juan@dominio.com"
@@ -172,6 +178,7 @@ export function Form({ onSubmit, products }: Props) {
                 </Label>
                 <Input
                   id="phone"
+                  disabled={idCx}
                   maxLength={13}
                   placeholder="Ingresa tu número de teléfono"
                   type="number"
@@ -194,6 +201,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="gender" errors={errors} />
                 </Label>
                 <Select
+                  disabled={idCx}
                   value={watch("gender")}
                   onValueChange={(value) =>
                     setValue("gender", value, {
@@ -267,6 +275,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street"
+                  disabled={idCx}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street")}
                   className={errors.street ? "border-red-500" : ""}
@@ -279,6 +288,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="ext_num"
+                  disabled={idCx}
                   placeholder="Ejemplo: 123"
                   {...register("ext_num")}
                   className={errors.ext_num ? "border-red-500" : ""}
@@ -291,6 +301,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="int_num"
+                  disabled={idCx}
                   placeholder="Ejemplo: 123"
                   {...register("int_num")}
                   className={errors.int_num ? "border-red-500" : ""}
@@ -303,6 +314,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="colony"
+                  disabled={idCx}
                   placeholder="Ejemplo: Colonia Centro"
                   {...register("colony")}
                   className={errors.colony ? "border-red-500" : ""}
@@ -316,6 +328,7 @@ export function Form({ onSubmit, products }: Props) {
                   maxLength={5}
                   type="number"
                   id="cp"
+                  disabled={idCx}
                   placeholder="Ejemplo: 12345"
                   {...register("cp")}
                   onChange={(event) => {
@@ -338,6 +351,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="municipe"
+                  disabled={idCx}
                   placeholder="Ejemplo: Cuauhtémoc"
                   {...register("municipe")}
                   className={errors.municipe ? "border-red-500" : ""}
@@ -351,6 +365,7 @@ export function Form({ onSubmit, products }: Props) {
 
                 <Select
                   value={watch("state")}
+                  disabled={idCx}
                   onValueChange={(value) =>
                     setValue("state", value, {
                       shouldValidate: true,
@@ -380,6 +395,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="city"
+                  disabled={idCx}
                   placeholder="Ejemplo: Ciudad de México"
                   {...register("city")}
                   className={errors.city ? "border-red-500" : ""}
@@ -393,6 +409,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street_distance"
+                  disabled={idCx}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street_distance")}
                   className={errors.street_distance ? "border-red-500" : ""}

@@ -30,3 +30,10 @@ export const getSign = (document_id: any) => {
 export const sendEmail = (document_id: any) => {
   return axios.post(backendUrl + `/documents/${document_id}/email`);
 };
+
+export const sendLog = (
+  document_id: string,
+  payload: Record<string, unknown>
+) => {
+  return axios.post(backendUrl + `/documents/${document_id}/log`, payload);
+};
