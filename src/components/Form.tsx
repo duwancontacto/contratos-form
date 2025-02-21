@@ -101,7 +101,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="first_name"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Juan Miguel"
                   {...register("first_name")}
                   onChange={(e) => {
@@ -120,7 +120,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="last_name1" errors={errors} />
                 </Label>
                 <Input
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   type="text"
                   id="last_name1"
                   placeholder="Ejemplo: Pérez"
@@ -134,7 +134,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="last_name2" errors={errors} />
                 </Label>
                 <Input
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   type="text"
                   id="last_name2"
                   placeholder="Ejemplo: Fernandez"
@@ -163,7 +163,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="email" errors={errors} />
                 </Label>
                 <Input
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   id="email"
                   type="text"
                   placeholder="Ejemplo: Juan@dominio.com"
@@ -178,7 +178,7 @@ export function Form({ onSubmit, products }: Props) {
                 </Label>
                 <Input
                   id="phone"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   maxLength={13}
                   placeholder="Ingresa tu número de teléfono"
                   type="number"
@@ -201,7 +201,7 @@ export function Form({ onSubmit, products }: Props) {
                   <ErrorLabel name="gender" errors={errors} />
                 </Label>
                 <Select
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   value={watch("gender")}
                   onValueChange={(value) =>
                     setValue("gender", value, {
@@ -275,7 +275,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street")}
                   className={errors.street ? "border-red-500" : ""}
@@ -288,7 +288,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="ext_num"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 123"
                   {...register("ext_num")}
                   className={errors.ext_num ? "border-red-500" : ""}
@@ -301,7 +301,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="int_num"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 123"
                   {...register("int_num")}
                   className={errors.int_num ? "border-red-500" : ""}
@@ -314,7 +314,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="colony"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Colonia Centro"
                   {...register("colony")}
                   className={errors.colony ? "border-red-500" : ""}
@@ -328,7 +328,7 @@ export function Form({ onSubmit, products }: Props) {
                   maxLength={5}
                   type="number"
                   id="cp"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 12345"
                   {...register("cp")}
                   onChange={(event) => {
@@ -351,7 +351,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="municipe"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Cuauhtémoc"
                   {...register("municipe")}
                   className={errors.municipe ? "border-red-500" : ""}
@@ -365,7 +365,7 @@ export function Form({ onSubmit, products }: Props) {
 
                 <Select
                   value={watch("state")}
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   onValueChange={(value) =>
                     setValue("state", value, {
                       shouldValidate: true,
@@ -395,7 +395,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="city"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Ciudad de México"
                   {...register("city")}
                   className={errors.city ? "border-red-500" : ""}
@@ -409,7 +409,7 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street_distance"
-                  disabled={idCx}
+                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street_distance")}
                   className={errors.street_distance ? "border-red-500" : ""}
