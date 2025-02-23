@@ -102,12 +102,11 @@ export function Search({
         externalReset();
         setValue("first_name", user.first_name);
         setValue("last_name1", user.last_name1);
-        setValue("type", tipo);
-        setValue("last_name2", user.last_name2);
-        setValue("gender", sexo === "Masculino" ? "M" : "F");
-
         setValue("email", user.email);
+        setValue("last_name2", user.last_name2);
         setValue("phone", user.phone);
+        setValue("gender", sexo === "Masculino" ? "M" : "F");
+        setValue("type", tipo);
         setValue("id_phone", user.phoneId);
         setValue("idCX", idExterno);
         setValue("street", user.direccion.calle);

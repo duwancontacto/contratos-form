@@ -178,7 +178,6 @@ export function Form({ onSubmit, products }: Props) {
                 </Label>
                 <Input
                   id="phone"
-                  disabled={idCx ? true : false}
                   maxLength={13}
                   placeholder="Ingresa tu número de teléfono"
                   type="number"
@@ -275,7 +274,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street")}
                   className={errors.street ? "border-red-500" : ""}
@@ -288,7 +286,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="ext_num"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 123"
                   {...register("ext_num")}
                   className={errors.ext_num ? "border-red-500" : ""}
@@ -301,7 +298,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="int_num"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 123"
                   {...register("int_num")}
                   className={errors.int_num ? "border-red-500" : ""}
@@ -314,7 +310,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="colony"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Colonia Centro"
                   {...register("colony")}
                   className={errors.colony ? "border-red-500" : ""}
@@ -328,7 +323,6 @@ export function Form({ onSubmit, products }: Props) {
                   maxLength={5}
                   type="number"
                   id="cp"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: 12345"
                   {...register("cp")}
                   onChange={(event) => {
@@ -351,7 +345,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="municipe"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Cuauhtémoc"
                   {...register("municipe")}
                   className={errors.municipe ? "border-red-500" : ""}
@@ -365,7 +358,6 @@ export function Form({ onSubmit, products }: Props) {
 
                 <Select
                   value={watch("state")}
-                  disabled={idCx ? true : false}
                   onValueChange={(value) =>
                     setValue("state", value, {
                       shouldValidate: true,
@@ -395,7 +387,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="city"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Ciudad de México"
                   {...register("city")}
                   className={errors.city ? "border-red-500" : ""}
@@ -409,7 +400,6 @@ export function Form({ onSubmit, products }: Props) {
                 <Input
                   type="text"
                   id="street_distance"
-                  disabled={idCx ? true : false}
                   placeholder="Ejemplo: Calle 123"
                   {...register("street_distance")}
                   className={errors.street_distance ? "border-red-500" : ""}
