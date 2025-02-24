@@ -62,6 +62,10 @@ export const schema = yup.object().shape({
   city: yup.string().required("Ciudad requerida"),
   street_distance: yup.string().optional(),
   street_distance1: yup.string().optional(),
+  lat: yup.number().required("Latitud y Longitud requeridas"),
+  lng: yup.number().required("Latitud y Longitud requeridas"),
+  lat_delivery: yup.number().required("Latitud y Longitud requeridas"),
+  lng_delivery: yup.number().required("Latitud y Longitud requeridas"),
   delivery: yup.boolean().optional(),
 
   person_delivery: yup.string().optional(),

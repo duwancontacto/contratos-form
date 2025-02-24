@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { Plan, Product } from "../interfaces/products";
 import { Search } from "./Search";
 import { useState } from "react";
+import { LocationGps } from "./LocationGps";
 
 interface Props {
   //eslint-disable-next-line
@@ -442,7 +443,26 @@ export function Form({ onSubmit, products }: Props) {
                 />
               </div>
 
-              <div></div>
+              <div className="grid gap-2">
+                <Label className="" htmlFor="person_delivery">
+                  Locacion via GPS
+                  <ErrorLabel name="lat" errors={errors} />
+                </Label>
+                <LocationGps
+                  onLocationSelect={(e) => {
+                    setValue("lat", e.lat, {
+                      shouldValidate: true,
+                    });
+                    setValue("lng", e.lng, {
+                      shouldValidate: true,
+                    });
+                  }}
+                  initialLocation={{
+                    lat: watch("lat") || 0,
+                    lng: watch("lng") || 0,
+                  }}
+                />
+              </div>
 
               {watch("addressOption") && (
                 <div className="flex ">
@@ -644,6 +664,26 @@ export function Form({ onSubmit, products }: Props) {
                       className={errors.person_delivery ? "border-red-500" : ""}
                     />
                   </div>{" "}
+                  <div className="grid gap-2">
+                    <Label className="" htmlFor="person_delivery">
+                      Locacion via GPS
+                      <ErrorLabel name="lat_delivery" errors={errors} />
+                    </Label>
+                    <LocationGps
+                      onLocationSelect={(e) => {
+                        setValue("lat_delivery", e.lat, {
+                          shouldValidate: true,
+                        });
+                        setValue("lng_delivery", e.lng, {
+                          shouldValidate: true,
+                        });
+                      }}
+                      initialLocation={{
+                        lat: watch("lat_delivery") || 0,
+                        lng: watch("lng_delivery") || 0,
+                      }}
+                    />
+                  </div>
                 </>
               )}
             </CardContent>
