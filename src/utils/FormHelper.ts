@@ -96,6 +96,7 @@ export const schema = yup.object().shape({
 
 export const schemaSearch = yup.object().shape({
   email: yup.string().required("Correo electrónico requerido"),
+  tarjeta: yup.string().required("Número de tarjeta requerido"),
 });
 export const schemaAddress = yup.object().shape({
   option: yup.string().required("Direccion requerida"),

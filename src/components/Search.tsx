@@ -158,6 +158,21 @@ export function Search({
                 buscar
               </CardTitle>
             </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="tarjeta">
+                  Número de tarjeta
+                  <ErrorLabel name="tarjeta" errors={errors} />
+                </Label>
+                <Input
+                  id="tarjeta"
+                  type="text"
+                  placeholder="Ingresa tu número de tarjeta"
+                  {...register("tarjeta")}
+                  className={errors.tarjeta ? "border-red-500" : ""}
+                />
+              </div>
+            </CardContent>
             <CardContent className="grid  gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">
