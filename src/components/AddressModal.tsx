@@ -42,6 +42,8 @@ interface IContentModalProps {
         referncias: string;
         calle: string;
         id_externo: string;
+        latitud: string;
+        longitud: string;
       };
     }[];
   };
@@ -103,6 +105,8 @@ export default function AddressModal({
         ciudad,
         referncias,
         id_externo,
+        latitud,
+        longitud,
       } = selectedDireccion.direccion;
 
       setExternalValue("street", calle);
@@ -119,6 +123,8 @@ export default function AddressModal({
       setExternalValue("city", ciudad);
       setExternalValue("street_distance", referncias);
       setExternalValue("addressOption", id_externo);
+      setExternalValue("lat", latitud);
+      setExternalValue("lng", longitud);
 
       setOpen(false);
     }
@@ -261,7 +267,15 @@ export default function AddressModal({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Seleccionar</Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                handleSubmit(onSubmit)();
+              }}
+              type="submit"
+            >
+              Seleccionar
+            </Button>
             <div>
               <Button
                 onClick={(e) => {

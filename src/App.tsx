@@ -13,8 +13,9 @@ import {
   sendEmail,
   sendLog,
 } from "./services/search";
-import { Form } from "./components/Form";
+import { motion } from "framer-motion";
 import { Product } from "./interfaces/products";
+import PatientRegistrationForm from "./components/wizard/wizard-form";
 
 export default function App() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -138,10 +139,15 @@ export default function App() {
       {showLoading && <Loading />}
 
       {!showLoading && !showFalse && !showSuccess && (
-        <div className="py-12 md:py-12 lg:py-22">
+        <div className="pt-12 md:pt-12 lg:pt-22">
           <div className="container">
             <div className="grid gap-6 md:gap-8 lg:gap-12">
-              <div className="text-center">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
                 <h1 className="text-3xl font-bold  tracking-tighter sm:text-4xl md:text-5xl">
                   Registro de Pacientes
                 </h1>
@@ -151,9 +157,14 @@ export default function App() {
                 <span className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-lg/relaxed dark:text-gray-400 pt-3">
                   Los campos marcados con (*) son obligatorios
                 </span>
-              </div>
+              </motion.div>
 
-              <Form products={products} onSubmit={onSubmit} />
+              <PatientRegistrationForm
+                products={products}
+                onSubmit={onSubmit}
+              />
+
+              {/*  <Form products={products} onSubmit={onSubmit} /> */}
             </div>
           </div>
         </div>

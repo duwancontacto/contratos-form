@@ -24,7 +24,7 @@ const center = {
 
 interface MapComponentProps {
   onLocationSelect: (location: { lat: number; lng: number }) => void;
-  initialLocation: { lat: number; lng: number };
+  initialLocation?: { lat: number; lng: number };
 }
 
 function MapEvents({ onLocationSelect }: MapComponentProps) {
@@ -42,8 +42,8 @@ function Map({ onLocationSelect, initialLocation }: MapComponentProps) {
   const [map, setMap] = useState<L.Map | null>(null);
   const [position, setPosition] = useState<L.LatLng>(
     L.latLng(
-      initialLocation.lat || center.lat,
-      initialLocation.lng || center.lng
+      initialLocation?.lat || center.lat,
+      initialLocation?.lng || center.lng
     )
   );
 

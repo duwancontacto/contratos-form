@@ -1,14 +1,10 @@
 import axios from "axios";
-const baseUrl = import.meta.env.VITE_BASE_URL;
+
 const backendUrl = import.meta.env.VITE_BACK_URL;
+export const autoPopulateProfile = (email: string, tarjeta?: string) => {
+  const requestBody = { email, tarjeta };
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-export const autoPopulateProfile = (search: string) => {
-  const isEmailFormat = emailRegex.test(search);
-
-  const requestBody = isEmailFormat ? { email: search } : { telefono: search };
-
-  return axios.post(baseUrl + "/api/auth/medic", requestBody);
+  return axios.post(backendUrl + "/CX/clients", requestBody);
 };
 
 export const getProducts = () => {
