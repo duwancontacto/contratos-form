@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CardContent } from "../../ui/card";
-import { CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 
 export default function ConfirmationForm() {
   const containerVariants = {
@@ -36,19 +36,21 @@ export default function ConfirmationForm() {
             <CheckCircle2 className="w-8 h-8 text-green-600" />
           </div>
           <h3 className="text-xl font-medium text-center">¡Casi listo!</h3>
-          <p className="text-gray-500 text-center mt-2">
-            Por favor revisa toda la información y confirma que es correcta.
+          <p className="text-gray-500 text-center mt-2 max-w-md">
+            Estás a punto de completar el proceso. Antes de enviar, puedes
+            revisar tu información.
           </p>
         </motion.div>
 
         <motion.div
           variants={itemVariants}
-          className="p-4 bg-blue-50 rounded-lg border border-blue-100"
+          className="p-4 bg-blue-50 rounded-lg border border-blue-100 flex items-start text-blue-800"
         >
-          <p className="text-blue-800 text-sm">
-            Al enviar este formulario, confirmas que toda la información
-            proporcionada es correcta y completa según tu conocimiento.
-          </p>
+          <ArrowLeft className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
+          <span>
+            Si necesitas modificar algún dato, puedes volver a los pasos
+            anteriores con el botón "Anterior".
+          </span>
         </motion.div>
       </motion.div>
     </CardContent>

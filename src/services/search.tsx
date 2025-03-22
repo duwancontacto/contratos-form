@@ -7,6 +7,25 @@ export const autoPopulateProfile = (email: string, tarjeta?: string) => {
   return axios.post(backendUrl + "/CX/clients", requestBody);
 };
 
+export const individualAutoPopulateProfile = (
+  email: string,
+  tarjeta?: string
+) => {
+  const requestBodyWithCard = { tarjeta };
+  const requestBodyWithEmail = { email };
+
+  const requestWithCard = axios.post(
+    backendUrl + "/CX/clients",
+    requestBodyWithCard
+  );
+  const requestWithEmail = axios.post(
+    backendUrl + "/CX/clients",
+    requestBodyWithEmail
+  );
+
+  return Promise.all([requestWithCard, requestWithEmail]);
+};
+
 export const getProducts = () => {
   return axios.get(backendUrl + "/products");
 };

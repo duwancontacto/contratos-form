@@ -10,7 +10,13 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import { ChevronRight, Loader2 } from "lucide-react";
 import StepIndicator from "./wizard-navigation";
 import SearchStep from "./wizard-steps/search-step";
@@ -61,6 +67,7 @@ export default function PatientRegistrationForm({
 }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   const {
     register,
@@ -116,10 +123,22 @@ export default function PatientRegistrationForm({
     }
   };
 
-  const prevStep = (e: React.MouseEvent) => {
+  const handleDialogClose = () => {
+    setShowDialog(false);
+  };
+
+  const handleDialogConfirm = () => {
+    setShowDialog(false);
+    reset();
+    setCurrentStep(1);
+  };
+
+  const handlePrevStepWithDialog = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (currentStep > 1) {
+    if (currentStep > 2) {
       setCurrentStep(currentStep - 1);
+    } else {
+      setShowDialog(true);
     }
   };
 
@@ -217,7 +236,7 @@ export default function PatientRegistrationForm({
           <CardFooter className="flex justify-between p-6 border-t bg-gray-50">
             <Button
               variant="outline"
-              onClick={prevStep}
+              onClick={handlePrevStepWithDialog}
               disabled={currentStep === 1 || isLoading}
             >
               Anterior
@@ -251,16 +270,30 @@ export default function PatientRegistrationForm({
             </Button>
           </CardFooter>
         </Card>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-6 text-center text-sm text-gray-500"
-        >
-          ¿Necesitas ayuda? Contáctanos al 800-123-4567
-        </motion.div>
       </form>
+
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmación</DialogTitle>
+          </DialogHeader>
+          <p>
+            Si vuelves al paso 1, perderás toda la información ingresada. ¿Estás
+            seguro?
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleDialogClose}>
+              Cancelar
+            </Button>
+            <Button
+              className="bg-orange-500 hover:bg-orange-600 text-white"
+              onClick={handleDialogConfirm}
+            >
+              Aceptar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

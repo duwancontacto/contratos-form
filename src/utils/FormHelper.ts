@@ -98,16 +98,11 @@ export const schema = yup.object().shape({
 
 export const schemaSearch = yup.object().shape({
   email: yup.string().required("Correo electrónico requerido"),
-  tarjeta: yup.string().required("Número de tarjeta requerido"),
+  tarjeta: yup.string().required("Número de tarjeta requerido").length(13, "Debe tener 13 dígitos"),
 });
 export const schemaAddress = yup.object().shape({
   option: yup.string().required("Direccion requerida"),
 });
-
-
-
-
-
 
  export const searchStepSchema = yup.object().shape({
   idCX: yup.string(),
@@ -118,11 +113,11 @@ export const userDataStepSchema = yup.object().shape({
   first_name: yup.string().required("El nombre es requerido"),
   last_name1: yup.string().required("El apellido paterno es requerido"),
   last_name2: yup.string().required("El apellido materno es requerido"),
-  curp: yup.string().required("El CURP es requerido"),
+  curp: yup.string().required("El CURP es requerido").length(18, "Debe tener 18 dígitos"),
   email: yup.string().email("Email inválido").required("El email es requerido"),
-  phone: yup.string().required("El teléfono es requerido"),
+  phone: yup.string().required("El teléfono es requerido").length(10, "Debe tener 10 dígitos"),
   gender: yup.string().required("El género es requerido"),
-  card_new: yup.string().required("La tarjeta es requerido"),
+  card_new: yup.string().required("La tarjeta es requerido").length(13, "Debe tener 13 dígitos"),
 });
 
 export const addressStepSchema = yup.object().shape({
@@ -170,5 +165,5 @@ export const bankingStepSchema = yup.object().shape({
     .string()
     .required("El tipo de tarjeta física/digital es requerido"),
   full_name: yup.string().required("El nombre completo es requerido"),
-  digits: yup.string().required("Los últimos 4 dígitos son requeridos"),
+  digits: yup.string().required("Los últimos 4 dígitos son requeridos").length(4, "Debe ser de 4 dígitos"),
 });

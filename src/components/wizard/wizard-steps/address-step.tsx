@@ -243,10 +243,11 @@ export function AddressStep({
 
             <motion.div variants={itemVariants} className="grid gap-2">
               <Label className="" htmlFor="person_delivery">
-                Locacion via GPS
+                Geolocalización *
                 <ErrorLabel name="lat" errors={errors} />
               </Label>
               <LocationGps
+                idCx={idCx}
                 onLocationSelect={(e) => {
                   setValue("lat", e.lat, {
                     shouldValidate: true,
@@ -256,9 +257,16 @@ export function AddressStep({
                   });
                 }}
                 initialLocation={{
-                  lat: watch("lat") || 0,
-                  lng: watch("lng") || 0,
+                  lat: Number(watch("lat")) || 0,
+                  lng: Number(watch("lng")) || 0,
                 }}
+                initialAddress={`${watch("street") || ""} ${
+                  watch("ext_num") || ""
+                } ${watch("int_num") || ""} ${watch("colony") || ""} ${
+                  watch("cp") || ""
+                } ${watch("municipe") || ""} ${watch("state") || ""} ${
+                  watch("city") || ""
+                }`}
               />
             </motion.div>
           </div>
@@ -459,7 +467,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="person_delivery">
-                    Locacion via GPS
+                    Geolocalización
                     <ErrorLabel name="lat_delivery" errors={errors} />
                   </Label>
                   <LocationGps

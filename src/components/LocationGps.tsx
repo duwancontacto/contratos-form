@@ -8,6 +8,8 @@ import L from "leaflet";
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { Check, EditIcon, MapPin, Navigation, Search } from "lucide-react";
+import { SearchIcon, MapPinIcon, CheckIcon } from "lucide-react";
 
 // Corregir el ícono por defecto
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -25,6 +27,8 @@ const center = {
 interface MapComponentProps {
   onLocationSelect: (location: { lat: number; lng: number }) => void;
   initialLocation?: { lat: number; lng: number };
+  idCx?: string;
+  initialAddress?: string;
 }
 
 function MapEvents({ onLocationSelect }: MapComponentProps) {
@@ -37,8 +41,12 @@ function MapEvents({ onLocationSelect }: MapComponentProps) {
 }
 
 // Componente wrapper para el mapa
-function Map({ onLocationSelect, initialLocation }: MapComponentProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+function Map({
+  onLocationSelect,
+  initialLocation,
+  initialAddress,
+}: MapComponentProps) {
+  const [searchQuery, setSearchQuery] = useState(initialAddress?.trim());
   const [map, setMap] = useState<L.Map | null>(null);
   const [position, setPosition] = useState<L.LatLng>(
     L.latLng(
@@ -94,63 +102,75 @@ function Map({ onLocationSelect, initialLocation }: MapComponentProps) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 ">
-      <div className="flex mb-4 items-center justify-between">
-        <Input
-          type="text"
-          placeholder="Buscar locación..."
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-3 border border-gray-300 rounded-lg shadow-sm flex-grow focus:outline-none focus:ring-2 focus:ring-fanafesa"
-          onKeyPress={(e) => {
-            if (e.key === "Enter") handleSearch();
-          }}
-        />
-        <div className="flex space-x-2 ml-2">
-          <Button
-            className="bg-fanafesa text-white px-4 py-2 rounded-lg shadow-md hover:bg-fanafesa-dark transition duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              handleSearch();
-            }}
-          >
-            Buscar
-          </Button>
-          <Button
-            className="bg-fanafesa text-white px-4 py-2 rounded-lg shadow-md hover:bg-fanafesa-dark transition duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              handleCurrentLocation();
-            }}
-          >
-            Ubicación actual
-          </Button>
+    <div className="w-full h-full flex flex-col gap-2">
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-1">
+          <MapPin className="h-5 w-5 text-orange-500" />
+          <h2 className="text-xl font-semibold">Seleccionar ubicación</h2>
         </div>
+        <p className="text-sm text-muted-foreground">
+          Busca una dirección o haz clic en el mapa para seleccionar la
+          ubicación
+        </p>
       </div>
-      <div className="h-[400px]">
+
+      <div className="flex gap-2 mb-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ outline: "none", boxShadow: "none" }}
+            className="pl-9 pr-4 py-2 h-10 focus:outline-none"
+            placeholder="Buscar dirección"
+          />
+        </div>
+        <Button
+          onClick={handleSearch}
+          className="bg-orange-500 hover:bg-orange-600 text-white"
+        >
+          Buscar
+        </Button>
+      </div>
+
+      <div className="h-[280px]">
         <MapContainer
           center={position}
           zoom={13}
-          style={{ height: "100%", width: "100%" }}
+          style={{ borderRadius: "10px", height: "250px", width: "100%" }}
           ref={setMap}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+
           <MapEvents onLocationSelect={handleLocationSelect} />
           {position && <Marker position={position} />}
         </MapContainer>
       </div>
+
       <Button
-        className="mt-2 bg-fanafesa"
+        onClick={handleCurrentLocation}
+        variant="outline"
+        className="w-full flex items-center justify-center gap-2"
+      >
+        <Navigation className="h-4 w-4 text-orange-500" />
+        Ir a mi ubicación
+      </Button>
+
+      <Button
         onClick={(e) => {
           e.preventDefault();
           if (position) {
             onLocationSelect({ lat: position.lat, lng: position.lng });
           }
         }}
+        className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+        disabled={!position}
       >
-        Acepto esta locación
+        <Check className="h-4 w-4 mr-2" />
+        Confirmar ubicación
       </Button>
     </div>
   );
@@ -160,25 +180,53 @@ function Map({ onLocationSelect, initialLocation }: MapComponentProps) {
 export function LocationGps({
   onLocationSelect,
   initialLocation,
+  idCx,
+  initialAddress,
 }: MapComponentProps) {
   const [open, setOpen] = useState(false);
+
+  const [enableByDefault] = useState(idCx && initialLocation?.lat);
   return (
     <div className="">
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(value) => value === false && setOpen(false)}
+      >
         <DialogTrigger asChild>
-          <Button onClick={() => setOpen(true)} className="w-full bg-fanafesa">
-            Abrir
-          </Button>
+          {enableByDefault || initialLocation?.lat ? (
+            <div className="mb-4 relative ">
+              <p className="flex items-center gap-2">
+                Lat: {initialLocation?.lat?.toFixed(2)} / Lng:{" "}
+                {initialLocation?.lng?.toFixed(2)}
+                {!enableByDefault && (
+                  <EditIcon
+                    onClick={() => setOpen(true)}
+                    className=" cursor-pointer"
+                  />
+                )}
+              </p>
+            </div>
+          ) : (
+            <Button
+              onClick={() => setOpen(true)}
+              className="w-full bg-fanafesa"
+            >
+              Abrir
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
-          <div className="h-[450px] w-full mt-5">
-            <Map
-              onLocationSelect={(e) => {
-                onLocationSelect(e);
-                setOpen(false);
-              }}
-              initialLocation={initialLocation}
-            />
+          <div className="h-[550px] w-full mt-5">
+            {open && (
+              <Map
+                initialAddress={initialAddress}
+                onLocationSelect={(e) => {
+                  onLocationSelect(e);
+                  setOpen(false);
+                }}
+                initialLocation={initialLocation}
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>

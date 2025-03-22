@@ -169,6 +169,7 @@ export function UserDataStep({
               maxLength={13}
               type="number"
               id="card_new"
+              disabled={idCx ? true : false}
               placeholder="Ejemplo: 4259452994"
               {...register("card_new")}
               onChange={(event) => {

@@ -8,7 +8,10 @@ import { Loader2 } from "lucide-react";
 import { useForm, UseFormSetValue } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaSearch } from "../../../utils/FormHelper";
-import { autoPopulateProfile } from "../../../services/search";
+import {
+  autoPopulateProfile,
+  individualAutoPopulateProfile,
+} from "../../../services/search";
 import toast from "react-hot-toast";
 import { containerVariants, itemVariants } from "../../../lib/motionVariants";
 import ErrorLabel from "../../ErrorLabel";
@@ -35,6 +38,7 @@ export default function SearchStep({
   const {
     register,
     handleSubmit,
+    setValue: setValueForm,
     reset,
     formState: { errors },
   } = useForm({
@@ -50,7 +54,18 @@ export default function SearchStep({
   }) => {
     try {
       setShowLoading(true);
-      const result = await autoPopulateProfile(email, tarjeta);
+
+      const resultIndividual = await individualAutoPopulateProfile(
+        email,
+        tarjeta
+      );
+
+      let result = resultIndividual[0];
+
+      if (!result.data.results) {
+        result = resultIndividual[1];
+      }
+      console.log("result", resultIndividual);
 
       if (!result.data.results) {
         toast("Prosiga a ingresar sus datos.", {
@@ -60,6 +75,7 @@ export default function SearchStep({
         setData?.({});
         nextStep?.(false);
         setValue?.("email", email);
+        setValue?.("tarjeta", tarjeta);
         document.getElementById("first_name")?.focus();
       } else {
         const contact = result.data.contacts[0] || null;
@@ -108,6 +124,7 @@ export default function SearchStep({
         setValue?.("type", tipo);
         setValue?.("gender", sexo === "Masculino" ? "M" : "F");
         setValue?.("email", user.email);
+        setValue?.("card_new", tarjeta);
         setValue?.("phone", user.phone);
         setValue?.("id_phone", user.phoneId);
         setValue?.("idCX", idExterno);
@@ -238,9 +255,19 @@ export default function SearchStep({
                 </Label>
                 <Input
                   id="tarjeta"
-                  type="text"
-                  placeholder="Ingresa tu número de tarjeta"
+                  maxLength={13}
+                  type="number"
                   {...register("tarjeta")}
+                  onChange={(event) => {
+                    let value = event.target.value;
+                    if (value.length > 13) {
+                      value = value.slice(0, 13);
+                    }
+                    setValueForm("tarjeta", value, {
+                      shouldValidate: true,
+                    });
+                  }}
+                  placeholder="Ingresa tu número de tarjeta"
                   className={errors.tarjeta ? "border-red-500" : ""}
                 />
               </motion.div>
