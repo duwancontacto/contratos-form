@@ -8,10 +8,7 @@ import { Loader2 } from "lucide-react";
 import { useForm, UseFormSetValue } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaSearch } from "../../../utils/FormHelper";
-import {
-  autoPopulateProfile,
-  individualAutoPopulateProfile,
-} from "../../../services/search";
+import { individualAutoPopulateProfile } from "../../../services/search";
 import toast from "react-hot-toast";
 import { containerVariants, itemVariants } from "../../../lib/motionVariants";
 import ErrorLabel from "../../ErrorLabel";

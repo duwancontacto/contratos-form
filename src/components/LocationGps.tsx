@@ -9,7 +9,6 @@ import L from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { Check, EditIcon, MapPin, Navigation, Search } from "lucide-react";
-import { SearchIcon, MapPinIcon, CheckIcon } from "lucide-react";
 
 // Corregir el ícono por defecto
 delete (L.Icon.Default.prototype as any)._getIconUrl;
