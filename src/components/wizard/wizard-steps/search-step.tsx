@@ -62,7 +62,6 @@ export default function SearchStep({
       if (!result.data.results) {
         result = resultIndividual[1];
       }
-      console.log("result", resultIndividual);
 
       if (!result.data.results) {
         toast("Prosiga a ingresar sus datos.", {
@@ -70,9 +69,9 @@ export default function SearchStep({
         });
         externalReset?.();
         setData?.({});
-        nextStep?.(false);
+        nextStep?.(true);
         setValue?.("email", email);
-        setValue?.("tarjeta", tarjeta);
+        setValue?.("card_new", tarjeta);
         document.getElementById("first_name")?.focus();
       } else {
         const contact = result.data.contacts[0] || null;
@@ -157,9 +156,12 @@ export default function SearchStep({
 
       setShowLoading(false);
     } catch (error) {
+      console.log(error);
+
       toast("Prosiga a ingresar sus datos.", {
         icon: "👨‍⚕️",
       });
+      nextStep?.(false);
       document.getElementById("first_name")?.focus();
       externalReset?.();
       setData?.({});
@@ -198,7 +200,10 @@ export default function SearchStep({
             </div>
             <Button
               className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-              onClick={() => setShowContactMessage(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowContactMessage(false);
+              }}
             >
               Cerrar
             </Button>

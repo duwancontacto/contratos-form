@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// eslint-disable-next-line
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface ApiProps {

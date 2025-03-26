@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
@@ -87,8 +87,21 @@ export default function PatientRegistrationForm({
 
   const [data, setData] = useState<Record<string, unknown>>({});
 
+  const watchAllFields = watch();
   const watchProduct = watch("product_id");
   const idCx = watch("idCX");
+
+  useEffect(() => {
+    const keysToExclude = ["product_id", "plan_id", "idCX", "email"];
+    Object.keys(watchAllFields).forEach((key) => {
+      if (
+        !keysToExclude.includes(key) &&
+        typeof watchAllFields[key] === "string"
+      ) {
+        setValue(key, (watchAllFields[key] as string).toUpperCase());
+      }
+    });
+  }, [watchAllFields, setValue]);
 
   const selectedProduct = products.find(
     (product: Product) => product.id.toString() === watchProduct

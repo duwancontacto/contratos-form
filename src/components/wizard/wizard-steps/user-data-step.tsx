@@ -120,7 +120,6 @@ export function UserDataStep({
             </Label>
             <Input
               id="phone"
-              disabled={idCx ? true : false}
               maxLength={13}
               placeholder="Ingresa tu número de teléfono"
               type="number"
