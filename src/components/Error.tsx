@@ -1,4 +1,10 @@
-export function Error({ handleReset }: { handleReset: () => void }) {
+export function Error({
+  handleReset,
+  showFalse,
+}: {
+  handleReset: () => void;
+  showFalse: boolean;
+}) {
   return (
     <>
       <div className="py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-950">
@@ -10,8 +16,9 @@ export function Error({ handleReset }: { handleReset: () => void }) {
                 Error en el Registro
               </h1>
               <p className="max-w-[600px] mx-auto text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Lo sentimos, ha ocurrido un error al procesar tu registro. Por
-                favor, inténtalo de nuevo más tarde.
+                {typeof showFalse === "string"
+                  ? showFalse
+                  : "Lo sentimos, ha ocurrido un error al procesar tu registro. Por favor, inténtalo de nuevo más tarde."}
               </p>
               <div className="mt-6">
                 <button

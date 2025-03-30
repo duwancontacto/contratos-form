@@ -112,7 +112,12 @@ export default function App() {
       performSignature(resultSign.data.body.data.signers[0].id, result.data.id);
     } catch (error) {
       console.log("error", error);
-      setShowFalse(true);
+      if ((error as any)?.response?.data) {
+        const { error: responseError, body } = (error as any).response.data;
+        setShowFalse(body || responseError);
+      } else {
+        setShowFalse(true);
+      }
       setShowLoading(false);
     }
   };
@@ -134,7 +139,7 @@ export default function App() {
       <Toaster />
 
       {showSuccess && <Success handleReset={handleReset} />}
-      {showFalse && <Error handleReset={handleReset} />}
+      {showFalse && <Error handleReset={handleReset} showFalse={showFalse} />}
 
       {showLoading && <Loading />}
 

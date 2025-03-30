@@ -101,7 +101,7 @@ export default function PatientRegistrationForm({
         setValue(key, (watchAllFields[key] as string).toUpperCase());
       }
     });
-  }, [watchAllFields, setValue]);
+  }, [watchAllFields]);
 
   const selectedProduct = products.find(
     (product: Product) => product.id.toString() === watchProduct

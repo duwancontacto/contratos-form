@@ -30,7 +30,8 @@ export default function SearchStep({
   const [showLoading, setShowLoading] = useState(false);
   const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
   const [showContactMessage, setShowContactMessage] = useState(false);
-  const [foundEmail, setFoundEmail] = useState("");
+  const [foundEmail, setFoundEmail] = useState(null);
+  const [foundCard, setFoundCard] = useState(null);
 
   const {
     register,
@@ -50,6 +51,10 @@ export default function SearchStep({
     tarjeta: string;
   }) => {
     try {
+      setFoundEmail(null);
+      setFoundCard(null);
+      setShowEmailConfirmation(false);
+      setShowContactMessage(false);
       setShowLoading(true);
 
       const resultIndividual = await individualAutoPopulateProfile(
@@ -79,6 +84,15 @@ export default function SearchStep({
           contact?.listaCorreoElectronico?.map(
             (email: any) => email.correroElectronico
           ) || [];
+
+        const registeredTarjetas =
+          contact?.listaTarjetas
+            ?.filter(
+              (tarjeta: any) =>
+                tarjeta.tarjeta.idPrograma === "627" ||
+                tarjeta.tarjeta.idPrograma === "42"
+            )
+            .map((tarjeta: any) => tarjeta.tarjeta.Folio) || [];
 
         setData?.(contact);
 
@@ -146,6 +160,11 @@ export default function SearchStep({
           setFoundEmail(registeredEmails[0]);
           setValue?.("email", registeredEmails[0]);
           setShowEmailConfirmation(true);
+        } else if (!registeredTarjetas.includes(tarjeta)) {
+          console.log("registeredTarjetas", registeredTarjetas);
+          setFoundCard(registeredTarjetas[0]);
+          setValue?.("card_new", registeredTarjetas[0]);
+          setShowEmailConfirmation(true);
         } else {
           nextStep?.(true);
         }
@@ -212,10 +231,12 @@ export default function SearchStep({
           <motion.div variants={containerVariants} className="space-y-4">
             <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-100">
               <p className="text-yellow-800">
-                Ya tiene un correo asociado a esta tarjeta. ¿Desea continuar con
-                el correo registrado?
+                Ya tienes un {foundEmail ? "correo" : "tarjeta"} asociado a
+                {foundEmail ? " esta tarjeta" : " este correo"}. ¿Desea
+                continuar con
+                {foundEmail ? " el correo" : " la tarjeta"} registrado?
               </p>
-              <p className="font-medium mt-2">{foundEmail}</p>
+              <p className="font-medium mt-2">{foundEmail ?? foundCard}</p>
             </div>
             <div className="flex gap-4">
               <Button
