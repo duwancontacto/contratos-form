@@ -114,7 +114,7 @@ export default function App() {
       console.log("error", error);
       if ((error as any)?.response?.data) {
         const { error: responseError, body } = (error as any).response.data;
-        setShowFalse(body || responseError);
+        setShowFalse(body.message || body || responseError);
       } else {
         setShowFalse(true);
       }

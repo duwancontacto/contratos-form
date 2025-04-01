@@ -161,10 +161,13 @@ export default function SearchStep({
           setValue?.("email", registeredEmails[0]);
           setShowEmailConfirmation(true);
         } else if (!registeredTarjetas.includes(tarjeta)) {
-          console.log("registeredTarjetas", registeredTarjetas);
-          setFoundCard(registeredTarjetas[0]);
-          setValue?.("card_new", registeredTarjetas[0]);
-          setShowEmailConfirmation(true);
+          if (registeredTarjetas.length > 0) {
+            setFoundCard(registeredTarjetas[0]);
+            setValue?.("card_new", registeredTarjetas[0]);
+            setShowEmailConfirmation(true);
+          } else {
+            nextStep?.(true);
+          }
         } else {
           nextStep?.(true);
         }
@@ -213,8 +216,8 @@ export default function SearchStep({
           <motion.div variants={containerVariants} className="space-y-4">
             <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
               <p className="text-blue-800">
-                Para modificar su información, favor de ponerse en contacto con
-                correo@fanasa.com
+                Para modificar su información, favor de hablar a nuestro contact
+                center: 01 800 000 0000
               </p>
             </div>
             <Button
@@ -231,22 +234,28 @@ export default function SearchStep({
           <motion.div variants={containerVariants} className="space-y-4">
             <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-100">
               <p className="text-yellow-800">
-                Ya tienes un {foundEmail ? "correo" : "tarjeta"} asociado a
+                Ya tienes {foundEmail ? "un correo" : "una tarjeta"} asociado a
                 {foundEmail ? " esta tarjeta" : " este correo"}. ¿Desea
                 continuar con
                 {foundEmail ? " el correo" : " la tarjeta"} registrado?
               </p>
               <p className="font-medium mt-2">{foundEmail ?? foundCard}</p>
+
+              <p className="text-yellow-800 pt-3">
+                Si desea modificar su información, favor de hablar a nuestro
+                contact center: 01 800 000 0000
+              </p>
             </div>
             <div className="flex gap-4">
               <Button
                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleEmailChoice(false);
+                  setShowEmailConfirmation(false);
+                  setShowContactMessage(false);
                 }}
               >
-                No, modificarlo
+                No, Volver al inicio
               </Button>
               <Button
                 className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
