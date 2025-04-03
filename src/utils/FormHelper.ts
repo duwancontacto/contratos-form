@@ -106,6 +106,7 @@ export const schemaAddress = yup.object().shape({
 
  export const searchStepSchema = yup.object().shape({
   idCX: yup.string(),
+  id_card: yup.string(),
   addressOption: yup.string(),
 });
 

@@ -51,6 +51,7 @@ export default function SearchStep({
     tarjeta: string;
   }) => {
     try {
+      externalReset?.();
       setFoundEmail(null);
       setFoundCard(null);
       setShowEmailConfirmation(false);
@@ -72,7 +73,6 @@ export default function SearchStep({
         toast("Prosiga a ingresar sus datos.", {
           icon: "👨‍⚕️",
         });
-        externalReset?.();
         setData?.({});
         nextStep?.(true);
         setValue?.("email", email);
@@ -93,6 +93,8 @@ export default function SearchStep({
                 tarjeta.tarjeta.idPrograma === "42"
             )
             .map((tarjeta: any) => tarjeta.tarjeta.Folio) || [];
+
+        let tarjetaSelected = tarjeta;
 
         setData?.(contact);
 
@@ -127,7 +129,6 @@ export default function SearchStep({
             {},
         };
 
-        externalReset?.();
         setValue?.("first_name", user.first_name);
         setValue?.("last_name1", user.last_name1);
         setValue?.("last_name2", user.last_name2);
@@ -164,6 +165,7 @@ export default function SearchStep({
           if (registeredTarjetas.length > 0) {
             setFoundCard(registeredTarjetas[0]);
             setValue?.("card_new", registeredTarjetas[0]);
+            tarjetaSelected = registeredTarjetas[0];
             setShowEmailConfirmation(true);
           } else {
             nextStep?.(true);
@@ -171,6 +173,12 @@ export default function SearchStep({
         } else {
           nextStep?.(true);
         }
+
+        const idCard = contact?.listaTarjetas?.find(
+          (tarjeta: any) => tarjeta.tarjeta.Folio === tarjetaSelected
+        )?.tarjeta.ID;
+
+        setValue?.("id_card", idCard);
 
         toast.success("Paciente encontrado!");
         reset();
@@ -185,7 +193,6 @@ export default function SearchStep({
       });
       nextStep?.(false);
       document.getElementById("first_name")?.focus();
-      externalReset?.();
       setData?.({});
       setShowLoading(false);
     }
