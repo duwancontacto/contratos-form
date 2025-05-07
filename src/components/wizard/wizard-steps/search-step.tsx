@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { useForm, UseFormSetValue } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaSearch } from "../../../utils/FormHelper";
+import { defaultValues } from "../../../utils/FormHelper";
 import { individualAutoPopulateProfile } from "../../../services/search";
 import toast from "react-hot-toast";
 import { containerVariants, itemVariants } from "../../../lib/motionVariants";
@@ -17,7 +18,7 @@ import { PatientFormData } from "../../../types/form";
 interface SearchStepProps {
   setValue?: UseFormSetValue<PatientFormData>;
   setData?: (data: Record<string, unknown>) => void;
-  externalReset?: () => void;
+  externalReset?: (data?: any) => void;
   nextStep?: (skipStep: boolean) => void;
 }
 
@@ -51,7 +52,7 @@ export default function SearchStep({
     tarjeta: string;
   }) => {
     try {
-      externalReset?.();
+      externalReset?.(defaultValues);
       setFoundEmail(null);
       setFoundCard(null);
       setShowEmailConfirmation(false);

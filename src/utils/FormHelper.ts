@@ -51,7 +51,6 @@ export const schema = yup.object().shape({
     .length(10, "Debe tener 10 dígitos"),
   id_phone: yup.string().optional(),
 
-
   street: yup.string().required("Calle requerida"),
   ext_num: yup.string().required("Número Ext requerido"),
   int_num: yup.string().optional(),
@@ -98,13 +97,16 @@ export const schema = yup.object().shape({
 
 export const schemaSearch = yup.object().shape({
   email: yup.string().required("Correo electrónico requerido"),
-  tarjeta: yup.string().required("Número de tarjeta requerido").length(13, "Debe tener 13 dígitos"),
+  tarjeta: yup
+    .string()
+    .required("Número de tarjeta requerido")
+    .length(13, "Debe tener 13 dígitos"),
 });
 export const schemaAddress = yup.object().shape({
   option: yup.string().required("Direccion requerida"),
 });
 
- export const searchStepSchema = yup.object().shape({
+export const searchStepSchema = yup.object().shape({
   idCX: yup.string(),
   id_card: yup.string(),
   addressOption: yup.string(),
@@ -114,11 +116,20 @@ export const userDataStepSchema = yup.object().shape({
   first_name: yup.string().required("El nombre es requerido"),
   last_name1: yup.string().required("El apellido paterno es requerido"),
   last_name2: yup.string().required("El apellido materno es requerido"),
-  curp: yup.string().required("El CURP es requerido").length(18, "Debe tener 18 dígitos"),
+  curp: yup
+    .string()
+    .required("El CURP es requerido")
+    .length(18, "Debe tener 18 dígitos"),
   email: yup.string().email("Email inválido").required("El email es requerido"),
-  phone: yup.string().required("El teléfono es requerido").length(10, "Debe tener 10 dígitos"),
+  phone: yup
+    .string()
+    .required("El teléfono es requerido")
+    .length(10, "Debe tener 10 dígitos"),
   gender: yup.string().required("El género es requerido"),
-  card_new: yup.string().required("La tarjeta es requerido").length(13, "Debe tener 13 dígitos"),
+  card_new: yup
+    .string()
+    .required("La tarjeta es requerido")
+    .length(13, "Debe tener 13 dígitos"),
 });
 
 export const addressStepSchema = yup.object().shape({
@@ -166,5 +177,74 @@ export const bankingStepSchema = yup.object().shape({
     .string()
     .required("El tipo de tarjeta física/digital es requerido"),
   full_name: yup.string().required("El nombre completo es requerido"),
-  digits: yup.string().required("Los últimos 4 dígitos son requeridos").length(4, "Debe ser de 4 dígitos"),
+  digits: yup
+    .string()
+    .required("Los últimos 4 dígitos son requeridos")
+    .length(4, "Debe ser de 4 dígitos"),
 });
+
+export const defaultValues = {
+  // User data
+  first_name: "",
+  last_name1: "",
+  last_name2: "",
+  curp: "",
+  email: "",
+  phone: "",
+  gender: "",
+  card_new: "",
+  id_phone: "",
+  idCX: "",
+  id_card: "",
+  type: "",
+
+  // Address data
+  street: "",
+  ext_num: "",
+  int_num: "",
+  colony: "",
+  person: "",
+  cp: "",
+  municipe: "",
+  state: "",
+  city: "",
+  street_distance: "",
+  street_distance1: "",
+  lat: undefined,
+  lng: undefined,
+  addressOption: "",
+
+  // Delivery options
+  delivery: false,
+  person_delivery: "",
+  street_delivery: "",
+  ext_num_delivery: "",
+  int_num_delivery: "",
+  colony_delivery: "",
+  cp_delivery: "",
+  municipe_delivery: "",
+  city_delivery: "",
+  state_delivery: "",
+  street_distance_delivery: "",
+  street_distance1_delivery: "",
+  lat_delivery: undefined,
+  lng_delivery: undefined,
+
+  // Product data
+  specialty: "",
+  product_id: "",
+  plan_id: "",
+  product_duration: "",
+
+  // Banking data
+  institution: "",
+  card_type: "",
+  full_name: "",
+  max_amount: "",
+  digits: "",
+  card_physical_or_digital: "",
+
+  // Search data
+  tarjeta: "",
+  option: "",
+};
