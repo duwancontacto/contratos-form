@@ -13,6 +13,7 @@ import { Plan, Product } from "../../../interfaces/products";
 import { CardContent } from "../../ui/card";
 import { motion } from "framer-motion";
 import { itemVariants, containerVariants } from "../../../lib/motionVariants";
+import toast from "react-hot-toast";
 
 interface MedicalProductStepProps {
   register: any;
@@ -31,6 +32,7 @@ export function MedicalProductStep({
   products,
   selectedProduct,
 }: MedicalProductStepProps) {
+  const currentContracts = watch("currentContracts");
   return (
     <CardContent className="space-y-6 bg-white">
       <motion.div
@@ -60,11 +62,26 @@ export function MedicalProductStep({
             </Label>
             <Select
               value={watch("product_id")}
-              onValueChange={(value) =>
+              onValueChange={(value) => {
+                const findProduct = products.find(
+                  (product: Product) =>
+                    product.id.toString() === value.toString()
+                );
+                const contract = currentContracts.find(
+                  (contract: any) =>
+                    contract.contrato.Producto === findProduct?.pdv
+                );
+
+                if (contract) {
+                  toast.error(
+                    "Ya tienes un contrato vigente activo con este producto. Por favor selecciona un producto diferente."
+                  );
+                  return;
+                }
                 setValue("product_id", value, {
                   shouldValidate: true,
-                })
-              }
+                });
+              }}
             >
               <SelectTrigger
                 className={errors.product_id ? "border-red-500" : ""}
@@ -96,11 +113,11 @@ export function MedicalProductStep({
                     <RadioGroup
                       className="flex items-center"
                       value={watch("plan_id")}
-                      onValueChange={(value) =>
+                      onValueChange={(value) => {
                         setValue("plan_id", value, {
                           shouldValidate: true,
-                        })
-                      }
+                        });
+                      }}
                     >
                       {selectedProduct?.plans.map((plan: Plan) => (
                         <div key={plan.id} className="flex items-center">

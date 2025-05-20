@@ -1,9 +1,7 @@
-
 export interface Plan {
   id: string;
   name: string;
   duration: string;
-
 }
 
 export interface Product {
@@ -14,4 +12,5 @@ export interface Product {
   price_membership_12: string;
   varcode: string;
   plans: Plan[];
+  pdv: string;
 }

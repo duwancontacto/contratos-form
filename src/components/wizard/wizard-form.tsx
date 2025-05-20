@@ -87,21 +87,8 @@ export default function PatientRegistrationForm({
 
   const [data, setData] = useState<Record<string, unknown>>({});
 
-  const watchAllFields = watch();
   const watchProduct = watch("product_id");
   const idCx = watch("idCX");
-
-  useEffect(() => {
-    const keysToExclude = ["product_id", "plan_id", "idCX", "email"];
-    Object.keys(watchAllFields).forEach((key) => {
-      if (
-        !keysToExclude.includes(key) &&
-        typeof watchAllFields[key] === "string"
-      ) {
-        setValue(key, (watchAllFields[key] as string).toUpperCase());
-      }
-    });
-  }, [watchAllFields]);
 
   const selectedProduct = products.find(
     (product: Product) => product.id.toString() === watchProduct
@@ -155,12 +142,22 @@ export default function PatientRegistrationForm({
     }
   };
 
+  const setCustomValue = (key: string, value: string) => {
+    const keysToExclude = ["product_id", "plan_id", "idCX", "email"];
+
+    if (!keysToExclude.includes(key) && typeof value === "string") {
+      setValue(key, value.toUpperCase());
+    } else {
+      setValue(key, value);
+    }
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return (
           <SearchStep
-            setValue={setValue}
+            setValue={setCustomValue}
             setData={setData}
             externalReset={reset}
             nextStep={nextStep}
@@ -172,7 +169,7 @@ export default function PatientRegistrationForm({
             register={register}
             errors={errors}
             watch={watch}
-            setValue={setValue}
+            setValue={setCustomValue}
             idCx={idCx}
           />
         );
@@ -182,7 +179,7 @@ export default function PatientRegistrationForm({
             register={register}
             errors={errors}
             watch={watch}
-            setValue={setValue}
+            setValue={setCustomValue}
             idCx={idCx}
             data={data}
           />
@@ -193,7 +190,7 @@ export default function PatientRegistrationForm({
             register={register}
             errors={errors}
             watch={watch}
-            setValue={setValue}
+            setValue={setCustomValue}
             products={products}
             selectedProduct={selectedProduct}
           />
@@ -204,7 +201,7 @@ export default function PatientRegistrationForm({
             register={register}
             errors={errors}
             watch={watch}
-            setValue={setValue}
+            setValue={setCustomValue}
           />
         );
       case 6:
