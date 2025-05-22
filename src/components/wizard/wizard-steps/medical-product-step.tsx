@@ -67,7 +67,7 @@ export function MedicalProductStep({
                   (product: Product) =>
                     product.id.toString() === value.toString()
                 );
-                const contract = currentContracts.find(
+                const contract = currentContracts?.find(
                   (contract: any) =>
                     contract.contrato.Producto === findProduct?.pdv
                 );
