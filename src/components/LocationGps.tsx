@@ -62,14 +62,20 @@ function Map({
     if (searchQuery) {
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            searchQuery
+          )}&key=AIzaSyD1AunFh7l1TlZjxhQTuBlP-NqL1M61n_4`
         );
         const results = await response.json();
-        if (results.length > 0) {
-          const { lat, lon } = results[0];
-          const newPosition = L.latLng(parseFloat(lat), parseFloat(lon));
+
+        if (results.results.length > 0) {
+          const { latitude, longitude } =
+            results.results[0].navigation_points[0].location;
+          const newPosition = L.latLng(
+            parseFloat(latitude),
+            parseFloat(longitude)
+          );
           setPosition(newPosition);
-          console.log("map", map);
           if (map) {
             map.setView(newPosition, 13);
           }

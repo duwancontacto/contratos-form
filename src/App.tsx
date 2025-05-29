@@ -105,6 +105,30 @@ export default function App() {
     try {
       setShowLoading(true);
 
+      if (data.delivery) {
+        const deliveryKeys = [
+          "person_delivery",
+          "street_delivery",
+          "ext_num_delivery",
+          "int_num_delivery",
+          "colony_delivery",
+          "cp_delivery",
+          "municipe_delivery",
+          "city_delivery",
+          "state_delivery",
+          "street_distance_delivery",
+          "street_distance1_delivery",
+          "lat_delivery",
+          "lng_delivery",
+        ];
+
+        deliveryKeys.forEach((key) => {
+          const newKey = key.replace("_delivery", "");
+          data[newKey] = data[key];
+          data[key] = "";
+        });
+      }
+
       const result = await sendContract(data);
 
       const resultSign = await getSign(result.data.id);
@@ -114,7 +138,12 @@ export default function App() {
       console.log("error", error);
       if ((error as any)?.response?.data) {
         const { error: responseError, body } = (error as any).response.data;
-        setShowFalse(body.message || body || responseError);
+        setShowFalse(
+          body?.message ||
+            body ||
+            responseError ||
+            "Error, no se pudo procesar el registro"
+        );
       } else {
         setShowFalse(true);
       }

@@ -483,6 +483,15 @@ export function AddressStep({
                       lat: watch("lat_delivery") || 0,
                       lng: watch("lng_delivery") || 0,
                     }}
+                    initialAddress={`${watch("street_delivery") || ""} ${
+                      watch("ext_num_delivery") || ""
+                    } ${watch("int_num_delivery") || ""} ${
+                      watch("colony_delivery") || ""
+                    } ${watch("cp_delivery") || ""} ${
+                      watch("municipe_delivery") || ""
+                    } ${watch("state_delivery") || ""} ${
+                      watch("city_delivery") || ""
+                    }`}
                   />
                 </motion.div>
               </div>
