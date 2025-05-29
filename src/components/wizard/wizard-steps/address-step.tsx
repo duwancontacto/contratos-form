@@ -300,7 +300,8 @@ export function AddressStep({
               <div className="grid lg:grid-cols-2 gap-4">
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="street_delivery">
-                    Calle <ErrorLabel name="street_delivery" errors={errors} />
+                    Calle *{" "}
+                    <ErrorLabel name="street_delivery" errors={errors} />
                   </Label>
                   <Input
                     type="text"
@@ -312,7 +313,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="ext_num_delivery">
-                    Número Ext{" "}
+                    Número Ext *
                     <ErrorLabel name="ext_num_delivery" errors={errors} />
                   </Label>
                   <Input
@@ -325,7 +326,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="int_num_delivery">
-                    Número Int{" "}
+                    Número Int
                     <ErrorLabel name="int_num_delivery" errors={errors} />
                   </Label>
                   <Input
@@ -338,7 +339,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="colony_delivery">
-                    Colonia{" "}
+                    Colonia *
                     <ErrorLabel name="colony_delivery" errors={errors} />
                   </Label>
                   <Input
@@ -351,7 +352,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="cp_delivery">
-                    C.P <ErrorLabel name="cp_delivery" errors={errors} />
+                    C.P * <ErrorLabel name="cp_delivery" errors={errors} />
                   </Label>
                   <Input
                     type="text"
@@ -363,7 +364,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="municipe_delivery">
-                    Alcaldía / Municipio{" "}
+                    Alcaldía / Municipio *
                     <ErrorLabel name="municipe_delivery" errors={errors} />
                   </Label>
                   <Input
@@ -376,7 +377,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="state_delivery">
-                    Estado
+                    Estado *
                     <ErrorLabel name="state_delivery" errors={errors} />
                   </Label>
                   <Select
@@ -406,7 +407,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="city_delivery">
-                    Ciudad <ErrorLabel name="city_delivery" errors={errors} />
+                    Ciudad * <ErrorLabel name="city_delivery" errors={errors} />
                   </Label>
                   <Input
                     type="text"
@@ -467,7 +468,7 @@ export function AddressStep({
                 </motion.div>
                 <motion.div variants={itemVariants} className="grid gap-2">
                   <Label className="" htmlFor="person_delivery">
-                    Geolocalización
+                    Geolocalización *
                     <ErrorLabel name="lat_delivery" errors={errors} />
                   </Label>
                   <LocationGps

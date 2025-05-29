@@ -145,6 +145,13 @@ export default function PatientRegistrationForm({
   const setCustomValue = (key: string, value: string) => {
     const keysToExclude = ["product_id", "plan_id", "idCX", "email"];
 
+    console.log(
+      "key",
+      key,
+      !keysToExclude.includes(key),
+      typeof value === "string"
+    );
+
     if (!keysToExclude.includes(key) && typeof value === "string") {
       setValue(key, value.toUpperCase());
     } else {

@@ -150,21 +150,55 @@ export const addressStepSchema = yup.object().shape({
   delivery: yup.boolean().optional(),
 
   person_delivery: yup.string().optional(),
-  street_delivery: yup.string().required("Calle requerida"),
-  ext_num_delivery: yup.string().required("Número Ext requerido"),
+  street_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Calle requerida"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  ext_num_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Número Ext requerido"),
+    otherwise: (schema) => schema.optional(),
+  }),
   int_num_delivery: yup.string().optional(),
-  colony_delivery: yup.string().required("Colonia requerida"),
-  cp_delivery: yup
-    .string()
-    .required("C.P requerido")
-    .length(5, "Debe tener 5 dígitos"),
-  municipe_delivery: yup.string().required("Alcaldia / Municipio requerido"),
-  city_delivery: yup.string().required("Ciudad requerida"),
-  state_delivery: yup.string().required("Estado requerido"),
+  colony_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Colonia requerida"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  cp_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) =>
+      schema.required("C.P requerido").length(5, "Debe tener 5 dígitos"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  municipe_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Alcaldia / Municipio requerido"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  city_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Ciudad requerida"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  state_delivery: yup.string().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Estado requerido"),
+    otherwise: (schema) => schema.optional(),
+  }),
   street_distance_delivery: yup.string().optional(),
   street_distance1_delivery: yup.string().optional(),
-  lat_delivery: yup.number().required("Latitud y Longitud requeridas"),
-  lng_delivery: yup.number().required("Latitud y Longitud requeridas"),
+  lat_delivery: yup.number().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Latitud y Longitud requeridas"),
+    otherwise: (schema) => schema.optional(),
+  }),
+  lng_delivery: yup.number().when("delivery", {
+    is: true,
+    then: (schema) => schema.required("Latitud y Longitud requeridas"),
+    otherwise: (schema) => schema.optional(),
+  }),
 });
 
 export const medicalProductStepSchema = yup.object().shape({
