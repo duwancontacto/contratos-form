@@ -17,14 +17,39 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import AddressModal from "../../AddressModal";
 import { itemVariants, containerVariants } from "../../../lib/motionVariants";
+import { FieldErrors, UseFormWatch, UseFormSetValue } from "react-hook-form";
+import { PatientFormData } from "../../../types/form";
+
+interface AddressData {
+  listaDireccion: {
+    direccion: {
+      estado: string;
+      ciudad: string;
+      numeroExterior: string;
+      numeroInterior: string;
+      colonia: string;
+      codigoPostal: string;
+      delgacionMunicipio: string;
+      referncias: string;
+      calle: string;
+      id_externo: string;
+      latitud: string;
+      longitud: string;
+    };
+  }[];
+}
 
 interface AddressStepProps {
-  register: any;
-  errors: any;
-  watch: any;
-  setValue: any;
-  idCx: any;
-  data: any;
+  register: (name: string) => {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    name: string;
+    ref: (instance: HTMLInputElement | null) => void;
+  };
+  errors: FieldErrors<PatientFormData>;
+  watch: UseFormWatch<PatientFormData>;
+  setValue: UseFormSetValue<PatientFormData>;
+  idCx: string | undefined;
+  data: AddressData;
 }
 
 export function AddressStep({
@@ -249,10 +274,10 @@ export function AddressStep({
               <LocationGps
                 idCx={idCx}
                 onLocationSelect={(e) => {
-                  setValue("lat", e.lat, {
+                  setValue("lat", e.lat.toString(), {
                     shouldValidate: true,
                   });
-                  setValue("lng", e.lng, {
+                  setValue("lng", e.lng.toString(), {
                     shouldValidate: true,
                   });
                 }}
@@ -278,11 +303,8 @@ export function AddressStep({
             >
               <Checkbox
                 id="delivery"
-                {...register("delivery")}
-                checked={watch("delivery") === true ? true : false}
-                value={watch("delivery")}
+                checked={watch("delivery") === true}
                 onCheckedChange={(e: boolean) => {
-                  console.log("e", e);
                   setValue("delivery", e, {
                     shouldValidate: true,
                   });
@@ -473,10 +495,10 @@ export function AddressStep({
                   </Label>
                   <LocationGps
                     onLocationSelect={(e) => {
-                      setValue("lat_delivery", e.lat, {
+                      setValue("lat_delivery", e.lat.toString(), {
                         shouldValidate: true,
                       });
-                      setValue("lng_delivery", e.lng, {
+                      setValue("lng_delivery", e.lng.toString(), {
                         shouldValidate: true,
                       });
                     }}

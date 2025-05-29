@@ -37,6 +37,7 @@ import {
   userDataStepSchema,
 } from "../../utils/FormHelper";
 import { PatientFormData } from "../../types/form";
+import { AddressData } from "../../types/form";
 
 // Define schemas for each step
 
@@ -85,7 +86,7 @@ export default function PatientRegistrationForm({
     },
   });
 
-  const [data, setData] = useState<Record<string, unknown>>({});
+  const [data, setData] = useState<AddressData>({ listaDireccion: [] });
 
   const watchProduct = watch("product_id");
   const idCx = watch("idCX");
@@ -93,6 +94,34 @@ export default function PatientRegistrationForm({
   const selectedProduct = products.find(
     (product: Product) => product.id.toString() === watchProduct
   );
+
+  // Función para registrar campos con conversión automática a mayúsculas
+  const registerWithUpperCase = (name: string) => {
+    const keysToExclude = [
+      "product_id",
+      "plan_id",
+      "idCX",
+      "email",
+      "cp",
+      "phone",
+      "digits",
+      "card_new",
+    ];
+    const field = register(name);
+
+    return {
+      ...field,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (
+          !keysToExclude.includes(name) &&
+          typeof e.target.value === "string"
+        ) {
+          e.target.value = e.target.value.toUpperCase();
+        }
+        field.onChange(e);
+      },
+    };
+  };
 
   const handleSend = async (data: PatientFormData) => {
     try {
@@ -145,13 +174,6 @@ export default function PatientRegistrationForm({
   const setCustomValue = (key: string, value: string) => {
     const keysToExclude = ["product_id", "plan_id", "idCX", "email"];
 
-    console.log(
-      "key",
-      key,
-      !keysToExclude.includes(key),
-      typeof value === "string"
-    );
-
     if (!keysToExclude.includes(key) && typeof value === "string") {
       setValue(key, value.toUpperCase());
     } else {
@@ -173,7 +195,7 @@ export default function PatientRegistrationForm({
       case 2:
         return (
           <UserDataStep
-            register={register}
+            register={registerWithUpperCase}
             errors={errors}
             watch={watch}
             setValue={setCustomValue}
@@ -183,7 +205,7 @@ export default function PatientRegistrationForm({
       case 3:
         return (
           <AddressStep
-            register={register}
+            register={registerWithUpperCase}
             errors={errors}
             watch={watch}
             setValue={setCustomValue}
@@ -194,7 +216,7 @@ export default function PatientRegistrationForm({
       case 4:
         return (
           <MedicalProductStep
-            register={register}
+            register={registerWithUpperCase}
             errors={errors}
             watch={watch}
             setValue={setCustomValue}
@@ -205,7 +227,7 @@ export default function PatientRegistrationForm({
       case 5:
         return (
           <BankingStep
-            register={register}
+            register={registerWithUpperCase}
             errors={errors}
             watch={watch}
             setValue={setCustomValue}

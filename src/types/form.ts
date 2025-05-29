@@ -24,4 +24,23 @@ export interface PatientFormData {
   lat: string;
   lng: string;
   [key: string]: any;
-} 
+}
+
+export interface AddressData {
+  listaDireccion: {
+    direccion: {
+      estado: string;
+      ciudad: string;
+      numeroExterior: string;
+      numeroInterior: string;
+      colonia: string;
+      codigoPostal: string;
+      delgacionMunicipio: string;
+      referncias: string;
+      calle: string;
+      id_externo: string;
+      latitud: string;
+      longitud: string;
+    };
+  }[];
+}
