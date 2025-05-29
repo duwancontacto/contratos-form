@@ -187,7 +187,7 @@ export default function PatientRegistrationForm({
         return (
           <SearchStep
             setValue={setCustomValue}
-            setData={setData}
+            setData={setData as any}
             externalReset={reset}
             nextStep={nextStep}
           />
