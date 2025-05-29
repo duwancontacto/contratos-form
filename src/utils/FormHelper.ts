@@ -150,18 +150,21 @@ export const addressStepSchema = yup.object().shape({
   delivery: yup.boolean().optional(),
 
   person_delivery: yup.string().optional(),
-  street_delivery: yup.string().optional(),
-  ext_num_delivery: yup.string().optional(),
+  street_delivery: yup.string().required("Calle requerida"),
+  ext_num_delivery: yup.string().required("Número Ext requerido"),
   int_num_delivery: yup.string().optional(),
-  colony_delivery: yup.string().optional(),
-  cp_delivery: yup.string().optional(),
-  municipe_delivery: yup.string().optional(),
-  city_delivery: yup.string().optional(),
-  state_delivery: yup.string().optional(),
+  colony_delivery: yup.string().required("Colonia requerida"),
+  cp_delivery: yup
+    .string()
+    .required("C.P requerido")
+    .length(5, "Debe tener 5 dígitos"),
+  municipe_delivery: yup.string().required("Alcaldia / Municipio requerido"),
+  city_delivery: yup.string().required("Ciudad requerida"),
+  state_delivery: yup.string().required("Estado requerido"),
   street_distance_delivery: yup.string().optional(),
   street_distance1_delivery: yup.string().optional(),
-  lat_delivery: yup.number().optional(),
-  lng_delivery: yup.number().optional(),
+  lat_delivery: yup.number().required("Latitud y Longitud requeridas"),
+  lng_delivery: yup.number().required("Latitud y Longitud requeridas"),
 });
 
 export const medicalProductStepSchema = yup.object().shape({

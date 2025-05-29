@@ -127,6 +127,8 @@ export default function App() {
           data[newKey] = data[key];
           data[key] = "";
         });
+
+        data.delivery = false;
       }
 
       const result = await sendContract(data);
