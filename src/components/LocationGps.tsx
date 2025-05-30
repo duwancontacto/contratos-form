@@ -80,9 +80,9 @@ function Map({
             newPosition = L.latLng(parseFloat(latitude), parseFloat(longitude));
           }
 
-          setPosition(newPosition);
+          setPosition(newPosition as any);
           if (map) {
-            map.setView(newPosition, 13);
+            map.setView(newPosition as any, 13);
           }
         }
       } catch (error) {
