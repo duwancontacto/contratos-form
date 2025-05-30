@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -69,12 +69,17 @@ function Map({
         const results = await response.json();
 
         if (results.results.length > 0) {
-          const { latitude, longitude } =
-            results.results[0].navigation_points[0].location;
-          const newPosition = L.latLng(
-            parseFloat(latitude),
-            parseFloat(longitude)
-          );
+          let newPosition = null;
+
+          if (results.results[0] && results.results[0]?.geometry.location) {
+            const { lat, lng } = results.results[0]?.geometry.location;
+            newPosition = L.latLng(parseFloat(lat), parseFloat(lng));
+          } else if (results.results[0]?.navigation_points[0]?.location) {
+            const { latitude, longitude } =
+              results.results[0].navigation_points[0].location;
+            newPosition = L.latLng(parseFloat(latitude), parseFloat(longitude));
+          }
+
           setPosition(newPosition);
           if (map) {
             map.setView(newPosition, 13);
@@ -85,6 +90,14 @@ function Map({
       }
     }
   };
+
+  useEffect(() => {
+    if (initialAddress) {
+      setTimeout(() => {
+        handleSearch();
+      }, 1000);
+    }
+  }, []);
 
   const handleCurrentLocation = () => {
     if (navigator.geolocation) {
