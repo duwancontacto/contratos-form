@@ -296,7 +296,7 @@ export function AddressStep({
             </motion.div>
           </div>
 
-          {watch("addressOption") && (
+          {true && (
             <motion.div
               variants={itemVariants}
               className="flex items-center mt-4"
@@ -316,7 +316,7 @@ export function AddressStep({
             </motion.div>
           )}
 
-          {watchDelivery === true && watch("addressOption") && (
+          {watchDelivery === true && (
             <div className="mt-6">
               <CardTitle className="mb-4">Domicilio de entrega</CardTitle>
               <div className="grid lg:grid-cols-2 gap-4">

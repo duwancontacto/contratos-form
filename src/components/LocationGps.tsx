@@ -203,6 +203,8 @@ export function LocationGps({
 }: MapComponentProps) {
   const [open, setOpen] = useState(false);
 
+  console.log("initialLocation", initialLocation);
+
   const [enableByDefault] = useState(idCx && initialLocation?.lat);
   return (
     <div className="">
@@ -214,8 +216,8 @@ export function LocationGps({
           {enableByDefault || initialLocation?.lat ? (
             <div className="mb-4 relative ">
               <p className="flex items-center gap-2">
-                Lat: {initialLocation?.lat?.toFixed(2)} / Lng:{" "}
-                {initialLocation?.lng?.toFixed(2)}
+                Lat: {Number(initialLocation?.lat).toFixed(2)} / Lng:{" "}
+                {Number(initialLocation?.lng).toFixed(2)}
                 {!enableByDefault && (
                   <EditIcon
                     onClick={() => setOpen(true)}
