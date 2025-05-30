@@ -92,12 +92,12 @@ function Map({
   };
 
   useEffect(() => {
-    if (initialAddress) {
+    if (initialAddress && map) {
       setTimeout(() => {
         handleSearch();
       }, 1000);
     }
-  }, []);
+  }, [map, initialAddress]);
 
   const handleCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -202,8 +202,6 @@ export function LocationGps({
   initialAddress,
 }: MapComponentProps) {
   const [open, setOpen] = useState(false);
-
-  console.log("initialLocation", initialLocation);
 
   const [enableByDefault] = useState(idCx && initialLocation?.lat);
   return (
