@@ -109,6 +109,7 @@ export const schemaAddress = yup.object().shape({
 export const searchStepSchema = yup.object().shape({
   idCX: yup.string(),
   id_card: yup.string(),
+  program_id: yup.string(),
   addressOption: yup.string(),
 });
 
@@ -233,6 +234,7 @@ export const defaultValues = {
   id_phone: "",
   idCX: "",
   id_card: "",
+  program_id: "",
   type: "",
 
   // Address data

@@ -178,9 +178,10 @@ export default function SearchStep({
 
         const idCard = contact?.listaTarjetas?.find(
           (tarjeta: any) => tarjeta.tarjeta.Folio === tarjetaSelected
-        )?.tarjeta.ID;
+        );
 
-        setValue?.("id_card", idCard);
+        setValue?.("id_card", idCard?.tarjeta.ID || "");
+        setValue?.("program_id", idCard?.tarjeta.idPrograma || "");
 
         toast.success("Paciente encontrado!");
         reset();
