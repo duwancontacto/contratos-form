@@ -13,7 +13,7 @@ import { CardContent, CardTitle } from "../../ui/card";
 import ErrorLabel from "../../ErrorLabel";
 import { LocationGps } from "../../LocationGps";
 import MexicoState from "../../../lib/mexicoStates.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import AddressModal from "../../AddressModal";
 import { itemVariants, containerVariants } from "../../../lib/motionVariants";
@@ -61,6 +61,7 @@ export function AddressStep({
   data,
 }: AddressStepProps) {
   const watchDelivery = watch("delivery");
+  const watchDisableAddress = watch("disableAddress");
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -102,7 +103,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="street"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: Calle 123"
                 {...register("street")}
                 className={errors.street ? "border-red-500" : ""}
@@ -115,7 +116,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="ext_num"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: 123"
                 {...register("ext_num")}
                 className={errors.ext_num ? "border-red-500" : ""}
@@ -128,7 +129,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="int_num"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: 123"
                 {...register("int_num")}
                 className={errors.int_num ? "border-red-500" : ""}
@@ -141,7 +142,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="colony"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: Colonia Centro"
                 {...register("colony")}
                 className={errors.colony ? "border-red-500" : ""}
@@ -155,7 +156,7 @@ export function AddressStep({
                 maxLength={5}
                 type="number"
                 id="cp"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: 12345"
                 {...register("cp")}
                 onChange={(event) => {
@@ -178,7 +179,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="municipe"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: Cuauhtémoc"
                 {...register("municipe")}
                 className={errors.municipe ? "border-red-500" : ""}
@@ -192,7 +193,7 @@ export function AddressStep({
 
               <Select
                 value={watch("state")}
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 onValueChange={(value) =>
                   setValue("state", value, {
                     shouldValidate: true,
@@ -219,7 +220,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="city"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: Ciudad de México"
                 {...register("city")}
                 className={errors.city ? "border-red-500" : ""}
@@ -233,7 +234,7 @@ export function AddressStep({
               <Input
                 type="text"
                 id="street_distance"
-                disabled={idCx ? true : false}
+                disabled={idCx && watchDisableAddress ? true : false}
                 placeholder="Ejemplo: Calle 123"
                 {...register("street_distance")}
                 className={errors.street_distance ? "border-red-500" : ""}

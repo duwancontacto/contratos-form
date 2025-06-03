@@ -146,6 +146,10 @@ export default function SearchStep({
           setValue?.("state", user.direccion.estado);
         }
 
+        if (user.direccion.latitud && user.direccion.longitud && idExterno) {
+          setValue?.("disableAddress", true);
+        }
+
         setValue?.("currentContracts", contact.listaContratos);
         setValue?.("street", user.direccion.calle);
         setValue?.("ext_num", user.direccion.numeroExterior);
