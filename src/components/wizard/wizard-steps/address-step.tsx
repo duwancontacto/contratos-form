@@ -13,7 +13,7 @@ import { CardContent, CardTitle } from "../../ui/card";
 import ErrorLabel from "../../ErrorLabel";
 import { LocationGps } from "../../LocationGps";
 import MexicoState from "../../../lib/mexicoStates.json";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import AddressModal from "../../AddressModal";
 import { itemVariants, containerVariants } from "../../../lib/motionVariants";
