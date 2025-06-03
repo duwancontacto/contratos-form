@@ -47,6 +47,7 @@ function Map({
 }: MapComponentProps) {
   const [searchQuery, setSearchQuery] = useState(initialAddress?.trim());
   const [map, setMap] = useState<L.Map | null>(null);
+  const [enableActions, setEnableActions] = useState(false);
   const [position, setPosition] = useState<L.LatLng>(
     L.latLng(
       initialLocation?.lat || center.lat,
@@ -59,6 +60,7 @@ function Map({
   };
 
   const handleSearch = async () => {
+    setEnableActions(true);
     if (searchQuery) {
       try {
         const response = await fetch(
@@ -185,7 +187,7 @@ function Map({
           }
         }}
         className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-        disabled={!position}
+        disabled={!position && !enableActions}
       >
         <Check className="h-4 w-4 mr-2" />
         Confirmar ubicación
