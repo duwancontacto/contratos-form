@@ -129,7 +129,7 @@ export default function App() {
         });
 
         data.delivery = false;
-        data.addressOption = "";
+        data.addressOption = null;
       }
 
       const result = await sendContract(data);
