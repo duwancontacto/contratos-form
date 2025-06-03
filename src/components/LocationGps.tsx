@@ -60,7 +60,7 @@ function Map({
   };
 
   const handleSearch = async () => {
-    setEnableActions(true);
+    setEnableActions(false);
     if (searchQuery) {
       try {
         const response = await fetch(
@@ -86,6 +86,7 @@ function Map({
           if (map) {
             map.setView(newPosition as any, 13);
           }
+          setEnableActions(true);
         }
       } catch (error) {
         console.error("Error al buscar la locación:", error);
@@ -186,8 +187,8 @@ function Map({
             onLocationSelect({ lat: position.lat, lng: position.lng });
           }
         }}
-        className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-        disabled={!position && !enableActions}
+        className="w-full bg-orange-500 disabled:bg-orange-300 hover:bg-orange-600 text-white"
+        disabled={!enableActions}
       >
         <Check className="h-4 w-4 mr-2" />
         Confirmar ubicación
