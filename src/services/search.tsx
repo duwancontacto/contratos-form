@@ -52,3 +52,7 @@ export const sendLog = (
 ) => {
   return axios.post(backendUrl + `/documents/${document_id}/log`, payload);
 };
+
+export const sendDocumentCompleted = (document_id: string) => {
+  return axios.post(backendUrl + `/documents/${document_id}/addContract`);
+};

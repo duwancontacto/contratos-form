@@ -10,6 +10,7 @@ import {
   getProducts,
   getSign,
   sendContract,
+  sendDocumentCompleted,
   sendEmail,
   sendLog,
 } from "./services/search";
@@ -56,6 +57,7 @@ export default function App() {
       toast.error("Ha ocurrido un error durante el proceso de firma.");
     } */
 
+    sendDocumentCompleted(document_id);
     sendLog(document_id, data);
     setShowSuccess(true);
     setShowLoading(false);
