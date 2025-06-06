@@ -162,7 +162,6 @@ export default function SearchStep({
         setValue?.("addressOption", user.direccion.id_externo);
         setValue?.("lat", user.direccion.latitud);
         setValue?.("lng", user.direccion.longitud);
-
         if (!registeredEmails.includes(email)) {
           setFoundEmail(registeredEmails[0]);
           setValue?.("email", registeredEmails[0]);
@@ -180,8 +179,27 @@ export default function SearchStep({
           nextStep?.(true);
         }
 
+        let hasFilteredCard = false;
+        if (contact?.listaTarjetas && tarjetaSelected) {
+          const tarjetasIguales = contact.listaTarjetas.filter(
+            (tarjetaObj: any) => tarjetaObj.tarjeta.Folio === tarjetaSelected
+          );
+          if (tarjetasIguales.length > 1) {
+            const tarjetaCon627 = tarjetasIguales.find(
+              (tarjetaObj: any) => tarjetaObj.tarjeta.idPrograma === "627"
+            );
+            if (tarjetaCon627) {
+              tarjetaSelected = tarjetaCon627.tarjeta.Folio;
+              setValue?.("card_new", tarjetaCon627.tarjeta.Folio);
+              hasFilteredCard = true;
+            }
+          }
+        }
+
         const idCard = contact?.listaTarjetas?.find(
-          (tarjeta: any) => tarjeta.tarjeta.Folio === tarjetaSelected
+          (tarjeta: any) =>
+            tarjeta.tarjeta.Folio === tarjetaSelected &&
+            (!hasFilteredCard || tarjeta.tarjeta.idPrograma === "627")
         );
 
         setValue?.("id_card", idCard?.tarjeta.ID || "");
