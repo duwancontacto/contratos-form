@@ -46,7 +46,7 @@ export default function App() {
   }, []);
 
   //eslint-disable-next-line
-  function signatureFinish(data: any, document_id: string) {
+  function signatureFinish(data: any, document_id: string, payload: any) {
     console.log("Payload", data);
     /*  if (data.signer.status === "confirmed") {
       console.log("Document id ", document_id);
@@ -57,7 +57,7 @@ export default function App() {
       toast.error("Ha ocurrido un error durante el proceso de firma.");
     } */
 
-    sendDocumentCompleted(document_id);
+    sendDocumentCompleted(document_id, payload);
     sendLog(document_id, data);
     setShowSuccess(true);
     setShowLoading(false);
@@ -75,7 +75,7 @@ export default function App() {
     };
   }, []);
 
-  const performSignature = (signerId: string, id: string) => {
+  const performSignature = (signerId: string, id: string, allData: object) => {
     //eslint-disable-next-line
     const legalario = new (window as any).LegalarioSDK({
       organizationId: import.meta.env.VITE_LEGALARIO_ORGANIZATION_ID,
@@ -92,7 +92,7 @@ export default function App() {
           authType: "NONE",
           callbacks: {
             //eslint-disable-next-line
-            onFinish: (data: any) => signatureFinish(data, id),
+            onFinish: (data: any) => signatureFinish(data, id, allData),
           },
         },
         1000
@@ -139,7 +139,11 @@ export default function App() {
 
       const resultSign = await getSign(result.data.id);
       setShowLoading(false);
-      performSignature(resultSign.data.body.data.signers[0].id, result.data.id);
+      performSignature(
+        resultSign.data.body.data.signers[0].id,
+        result.data.id,
+        data
+      );
     } catch (error) {
       console.log("error", error);
       if ((error as any)?.response?.data) {
