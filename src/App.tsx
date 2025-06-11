@@ -58,6 +58,8 @@ export default function App() {
       setShowLoading(false);
     } catch (error) {
       setShowFalse(true);
+      setShowLoading(false);
+      setShowSuccess(false);
       console.log("error", error);
     }
   }
