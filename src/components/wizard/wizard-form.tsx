@@ -280,33 +280,35 @@ export default function PatientRegistrationForm({
             >
               Anterior
             </Button>
-            <Button
-              className="bg-orange-500 hover:bg-orange-600 text-white"
-              onClick={(e) => {
-                e.preventDefault();
-                nextStep(false);
-              }}
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Procesando...
-                </>
-              ) : (
-                <>
-                  {currentStep === totalSteps
-                    ? "Enviar"
-                    : currentStep === 1
-                    ? "Soy Nuevo Usuario"
-                    : "Siguiente"}
-                  {currentStep !== totalSteps && (
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  )}
-                </>
-              )}
-            </Button>
+            {currentStep !== 1 && (
+              <Button
+                className="bg-orange-500 hover:bg-orange-600 text-white"
+                onClick={(e) => {
+                  e.preventDefault();
+                  nextStep(false);
+                }}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Procesando...
+                  </>
+                ) : (
+                  <>
+                    {currentStep === totalSteps
+                      ? "Enviar"
+                      : currentStep === 1
+                      ? "Soy Nuevo Usuario"
+                      : "Siguiente"}
+                    {currentStep !== totalSteps && (
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    )}{" "}
+                  </>
+                )}
+              </Button>
+            )}
           </CardFooter>
         </Card>
       </form>
