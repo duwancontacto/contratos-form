@@ -47,21 +47,18 @@ export default function App() {
 
   //eslint-disable-next-line
   function signatureFinish(data: any, document_id: string, payload: any) {
-    console.log("Payload", data);
-    /*  if (data.signer.status === "confirmed") {
-      console.log("Document id ", document_id);
+    try {
+      console.log("Payload", data);
+
+      sendDocumentCompleted(document_id, payload);
+      sendLog(document_id, data);
       setShowSuccess(true);
       setShowLoading(false);
       sendEmail(document_id);
-    } else {
-      toast.error("Ha ocurrido un error durante el proceso de firma.");
-    } */
-
-    sendDocumentCompleted(document_id, payload);
-    sendLog(document_id, data);
-    setShowSuccess(true);
-    setShowLoading(false);
-    sendEmail(document_id);
+    } catch (error) {
+      setShowFalse(true);
+      console.log("error", error);
+    }
   }
 
   useEffect(() => {
