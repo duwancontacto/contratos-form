@@ -105,7 +105,7 @@ export function UserDataStep({
               <ErrorLabel name="email" errors={errors} />
             </Label>
             <Input
-              disabled={idCx ? true : false}
+              disabled={true}
               id="email"
               type="text"
               placeholder="Ejemplo: Juan@dominio.com"
@@ -168,7 +168,7 @@ export function UserDataStep({
               maxLength={13}
               type="number"
               id="card_new"
-              disabled={idCx ? true : false}
+              disabled={true}
               placeholder="Ejemplo: 4259452994"
               {...register("card_new")}
               onChange={(event) => {
