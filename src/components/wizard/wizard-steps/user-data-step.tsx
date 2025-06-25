@@ -26,6 +26,8 @@ export function UserDataStep({
   setValue,
   idCx,
 }: UserDataStepProps) {
+  const watchCurrentPhones = watch("currentPhones");
+
   return (
     <CardContent className="space-y-6 bg-white">
       <motion.div
@@ -132,6 +134,21 @@ export function UserDataStep({
                 setValue("phone", value, {
                   shouldValidate: true,
                 });
+                if (watchCurrentPhones.length > 0) {
+                  const phoneFound = watchCurrentPhones.find(
+                    (phone: any) => phone?.telefono?.NumeroTelefonico === value
+                  );
+
+                  if (phoneFound) {
+                    setValue("id_phone", phoneFound.telefono.IDExterno, {
+                      shouldValidate: true,
+                    });
+                  } else {
+                    setValue("id_phone", "", {
+                      shouldValidate: true,
+                    });
+                  }
+                }
               }}
               className={errors.phone ? "border-red-500" : ""}
             />

@@ -150,6 +150,7 @@ export default function SearchStep({
           setValue?.("disableAddress", true);
         }
 
+        setValue?.("currentPhones", contact.listaTelefonos);
         setValue?.("currentContracts", contact.listaContratos);
         setValue?.("street", user.direccion.calle);
         setValue?.("ext_num", user.direccion.numeroExterior);

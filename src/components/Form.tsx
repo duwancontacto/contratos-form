@@ -55,6 +55,7 @@ export function Form({ onSubmit, products }: Props) {
   const watchDelivery = watch("delivery");
 
   const watchProduct = watch("product_id");
+  const watchCurrentPhones = watch("currentPhones");
 
   const idCx = watch("idCX");
 
@@ -191,6 +192,22 @@ export function Form({ onSubmit, products }: Props) {
                     setValue("phone", value, {
                       shouldValidate: true,
                     });
+                    if (watchCurrentPhones && watchCurrentPhones.length > 0) {
+                      const phoneFound = watchCurrentPhones.find(
+                        (phone: any) =>
+                          phone?.telefono?.NumeroTelefonico === value
+                      );
+
+                      if (phoneFound) {
+                        setValue("id_phone", phoneFound.telefono.IDExterno, {
+                          shouldValidate: true,
+                        });
+                      } else {
+                        setValue("id_phone", "", {
+                          shouldValidate: true,
+                        });
+                      }
+                    }
                   }}
                   className={errors.phone ? "border-red-500" : ""}
                 />

@@ -48,14 +48,13 @@ export default function App() {
   //eslint-disable-next-line
   async function signatureFinish(data: any, document_id: string, payload: any) {
     try {
-      console.log("Payload", data);
-
-      await sendDocumentCompleted(document_id, payload);
-      await sendLog(document_id, data);
-
-      await sendEmail(document_id);
       setShowSuccess(true);
       setShowLoading(false);
+      await Promise.all([
+        sendDocumentCompleted(document_id, payload),
+        sendLog(document_id, data),
+        sendEmail(document_id),
+      ]);
     } catch (error) {
       setShowFalse(true);
       setShowLoading(false);

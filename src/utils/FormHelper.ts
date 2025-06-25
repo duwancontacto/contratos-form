@@ -86,6 +86,7 @@ export const schema = yup.object().shape({
   full_name: yup.string().required("Nombre completo requerido"),
   max_amount: yup.string().optional(),
   product_id: yup.string().required("Producto requerido"),
+  currentPhones: yup.array().optional(),
   digits: yup
     .string()
     .required("Últimos 4 dígitos de la tarjeta requeridos")

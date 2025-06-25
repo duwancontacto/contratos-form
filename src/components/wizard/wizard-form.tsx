@@ -38,6 +38,7 @@ import {
 } from "../../utils/FormHelper";
 import { PatientFormData } from "../../types/form";
 import { AddressData } from "../../types/form";
+import toast from "react-hot-toast";
 
 // Define schemas for each step
 
@@ -67,7 +68,7 @@ export default function PatientRegistrationForm({
   onSubmit: (data: PatientFormData) => void;
 }) {
   const [currentStep, setCurrentStep] = useState(1);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
   const {
@@ -77,6 +78,8 @@ export default function PatientRegistrationForm({
     reset,
     watch,
     trigger,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<PatientFormData>({
     resolver: yupResolver(getValidationSchema(currentStep)) as any,
@@ -85,6 +88,8 @@ export default function PatientRegistrationForm({
       delivery: false,
     },
   });
+
+  console.log(errors);
 
   const [data, setData] = useState<AddressData>({ listaDireccion: [] });
 
@@ -138,7 +143,16 @@ export default function PatientRegistrationForm({
   const totalSteps = 6;
 
   const nextStep = async (skipStep: boolean) => {
+    if (Object.keys(errors).length > 0) {
+      toast.error("Por favor, corrige los errores antes de continuar");
+      return;
+    }
     const isValid = await trigger();
+
+    if (!isValid) {
+      toast.error("Por favor, corrige los errores antes de continuar");
+      return;
+    }
 
     if (currentStep === 1 && !skipStep) {
       reset();
@@ -164,6 +178,7 @@ export default function PatientRegistrationForm({
 
   const handlePrevStepWithDialog = (e: React.MouseEvent) => {
     e.preventDefault();
+    clearErrors();
     if (currentStep > 2) {
       setCurrentStep(currentStep - 1);
     } else {
@@ -211,6 +226,9 @@ export default function PatientRegistrationForm({
             setValue={setCustomValue}
             idCx={idCx}
             data={data}
+            setError={setError}
+            clearErrors={clearErrors}
+            setIsLoading={setIsLoading}
           />
         );
       case 4:
@@ -221,6 +239,7 @@ export default function PatientRegistrationForm({
             watch={watch}
             setValue={setCustomValue}
             products={products}
+            clearErrors={clearErrors}
             selectedProduct={selectedProduct}
           />
         );
@@ -230,6 +249,7 @@ export default function PatientRegistrationForm({
             register={registerWithUpperCase}
             errors={errors}
             watch={watch}
+            clearErrors={clearErrors}
             setValue={setCustomValue}
           />
         );

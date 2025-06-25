@@ -1,5 +1,6 @@
 export interface PatientFormData {
   product_id: string;
+  currentPhones: any[];
   idCX: string;
   plan_id: string;
   delivery: boolean;

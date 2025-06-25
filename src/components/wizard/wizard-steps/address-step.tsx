@@ -9,16 +9,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
+import { validateCP } from "../../../services/search";
 import { CardContent, CardTitle } from "../../ui/card";
 import ErrorLabel from "../../ErrorLabel";
 import { LocationGps } from "../../LocationGps";
 import MexicoState from "../../../lib/mexicoStates.json";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import AddressModal from "../../AddressModal";
 import { itemVariants, containerVariants } from "../../../lib/motionVariants";
-import { FieldErrors, UseFormWatch, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormWatch,
+  UseFormSetValue,
+  UseFormSetError,
+  UseFormClearErrors,
+} from "react-hook-form";
 import { PatientFormData } from "../../../types/form";
+import { Info } from "lucide-react";
 
 interface AddressData {
   listaDireccion: {
@@ -50,6 +58,9 @@ interface AddressStepProps {
   setValue: UseFormSetValue<PatientFormData>;
   idCx: string | undefined;
   data: AddressData;
+  setError?: UseFormSetError<PatientFormData>;
+  clearErrors?: UseFormClearErrors<PatientFormData>;
+  setIsLoading?: (isLoading: boolean) => void;
 }
 
 export function AddressStep({
@@ -59,11 +70,37 @@ export function AddressStep({
   setValue,
   idCx,
   data,
+  setError,
+  clearErrors,
+  setIsLoading,
 }: AddressStepProps) {
   const watchDelivery = watch("delivery");
   const watchDisableAddress = watch("disableAddress");
 
   const [openDialog, setOpenDialog] = useState(false);
+
+  const validateCPAddress = async (cp: string, field: "cp" | "cp_delivery") => {
+    if (!cp || cp.length < 5) return;
+    try {
+      setIsLoading && setIsLoading(true);
+      await validateCP(cp);
+      clearErrors && clearErrors(field);
+    } catch (e) {
+      setError &&
+        setError(field, { type: "manual", message: "Código postal inválido" });
+    } finally {
+      setIsLoading && setIsLoading(false);
+    }
+  };
+
+  // Validar CP y CP de entrega
+  useEffect(() => {
+    validateCPAddress(watch("cp"), "cp");
+  }, [watch("cp"), setError]);
+
+  useEffect(() => {
+    validateCPAddress(watch("cp_delivery"), "cp_delivery");
+  }, [watch("cp_delivery"), setError]);
 
   return (
     <CardContent className="space-y-6 bg-white">
@@ -81,8 +118,8 @@ export function AddressStep({
           setOpen={setOpenDialog}
         />
         <div className="w-full pt-5">
-          {data.listaDireccion?.length > 1 && (
-            <div className="flex justify-between items-center mb-4">
+          {data.listaDireccion?.length >= 1 && (
+            <div className="flex flex-col md:flex-row justify-start items-start md:items-center mb-4 gap-2">
               <Button
                 className="bg-fanafesa"
                 onClick={(e) => {
@@ -92,6 +129,22 @@ export function AddressStep({
               >
                 Consultar direcciones registradas
               </Button>
+              <div className="ml-0 md:ml-4 mt-2 md:mt-0 flex items-center">
+                {/* Tooltip con icono de información */}
+                <div className="relative group flex items-center">
+                  <Info
+                    className="w-5 h-5 text-orange-400 cursor-pointer"
+                    strokeWidth={2}
+                  />
+                  <div className="absolute -right-[300px] z-10 hidden group-hover:flex group-focus:flex mt-2 px-4 py-2 bg-orange-50 border-l-4 border-orange-400 text-gray-700 text-sm rounded shadow-lg w-72">
+                    <span>
+                      <span className="font-medium">Nota:</span> Si vas a
+                      ingresar una nueva dirección, por favor asegúrate de
+                      escribirla tal como aparece en tus recibos oficiales.
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -156,7 +209,9 @@ export function AddressStep({
                 maxLength={5}
                 type="number"
                 id="cp"
-                disabled={idCx && watchDisableAddress ? true : false}
+                disabled={
+                  idCx && watchDisableAddress && !errors.cp ? true : false
+                }
                 placeholder="Ejemplo: 12345"
                 {...register("cp")}
                 onChange={(event) => {
@@ -309,6 +364,19 @@ export function AddressStep({
                   setValue("delivery", e, {
                     shouldValidate: true,
                   });
+                  clearErrors && clearErrors("street_delivery");
+                  clearErrors && clearErrors("ext_num_delivery");
+                  clearErrors && clearErrors("int_num_delivery");
+                  clearErrors && clearErrors("colony_delivery");
+                  clearErrors && clearErrors("cp_delivery");
+                  clearErrors && clearErrors("municipe_delivery");
+                  clearErrors && clearErrors("state_delivery");
+                  clearErrors && clearErrors("city_delivery");
+                  clearErrors && clearErrors("street_distance_delivery");
+                  clearErrors && clearErrors("street_distance1_delivery");
+                  clearErrors && clearErrors("person_delivery");
+                  clearErrors && clearErrors("lat_delivery");
+                  clearErrors && clearErrors("lng_delivery");
                 }}
               />
               <Label htmlFor="delivery" className="ps-2">

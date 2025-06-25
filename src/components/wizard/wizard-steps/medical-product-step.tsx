@@ -22,6 +22,7 @@ interface MedicalProductStepProps {
   setValue: any;
   products: Product[];
   selectedProduct: Product | undefined;
+  clearErrors: any;
 }
 
 export function MedicalProductStep({
@@ -31,6 +32,7 @@ export function MedicalProductStep({
   setValue,
   products,
   selectedProduct,
+  clearErrors,
 }: MedicalProductStepProps) {
   const currentContracts = watch("currentContracts");
   return (
@@ -81,6 +83,7 @@ export function MedicalProductStep({
                 setValue("product_id", value, {
                   shouldValidate: true,
                 });
+                clearErrors("product_id");
               }}
             >
               <SelectTrigger
@@ -89,11 +92,13 @@ export function MedicalProductStep({
                 <SelectValue placeholder="Selecciona un producto" />
               </SelectTrigger>
               <SelectContent>
-                {products.map((product) => (
-                  <SelectItem key={product.id} value={product.id.toString()}>
-                    {product.description}
-                  </SelectItem>
-                ))}
+                {products
+                  .sort((a, b) => a.description.localeCompare(b.description))
+                  .map((product) => (
+                    <SelectItem key={product.id} value={product.id.toString()}>
+                      {product.description}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </motion.div>
@@ -117,6 +122,7 @@ export function MedicalProductStep({
                         setValue("plan_id", value, {
                           shouldValidate: true,
                         });
+                        clearErrors("plan_id");
                       }}
                     >
                       {selectedProduct?.plans.map((plan: Plan) => (

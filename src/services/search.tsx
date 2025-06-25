@@ -30,6 +30,10 @@ export const getProducts = () => {
   return axios.get(backendUrl + "/products");
 };
 
+export const validateCP = (cp: string) => {
+  return axios.post(backendUrl + "/sucursal", { cp });
+};
+
 //eslint-disable-next-line
 export const sendContract = (contractPayload: any) => {
   const requestBody = { ...contractPayload };

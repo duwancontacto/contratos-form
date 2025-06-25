@@ -16,6 +16,7 @@ interface BankingStepProps {
   errors: any;
   watch: any;
   setValue: any;
+  clearErrors: any;
 }
 
 export function BankingStep({
@@ -23,6 +24,7 @@ export function BankingStep({
   errors,
   watch,
   setValue,
+  clearErrors,
 }: BankingStepProps) {
   return (
     <CardContent className="space-y-6 bg-white">
@@ -52,11 +54,12 @@ export function BankingStep({
             </Label>
             <Select
               value={watch("card_type")}
-              onValueChange={(value) =>
+              onValueChange={(value) => {
                 setValue("card_type", value, {
                   shouldValidate: true,
-                })
-              }
+                });
+                clearErrors("card_type");
+              }}
             >
               <SelectTrigger
                 className={errors.card_type ? "border-red-500" : ""}
@@ -79,11 +82,12 @@ export function BankingStep({
             </Label>
             <Select
               value={watch("card_physical_or_digital")}
-              onValueChange={(value) =>
+              onValueChange={(value) => {
                 setValue("card_physical_or_digital", value, {
                   shouldValidate: true,
-                })
-              }
+                });
+                clearErrors("card_physical_or_digital");
+              }}
             >
               <SelectTrigger
                 className={
@@ -132,6 +136,7 @@ export function BankingStep({
                 setValue("digits", value, {
                   shouldValidate: true,
                 });
+                clearErrors("digits");
               }}
               className={errors.digits ? "border-red-500" : ""}
             />
