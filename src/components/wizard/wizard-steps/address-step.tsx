@@ -448,6 +448,7 @@ export function AddressStep({
                   <Input
                     type="text"
                     id="cp_delivery"
+                    maxLength={5}
                     placeholder="Ejemplo: 12345"
                     {...register("cp_delivery")}
                     className={errors.cp_delivery ? "border-red-500" : ""}
